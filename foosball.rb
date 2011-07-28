@@ -1,23 +1,26 @@
-
+require 'rubygems'
 require 'date'
 require 'sinatra'
 require 'rack-flash'
 require 'haml'
 require 'sass'
+require 'resolv'
+
+set :public, File.dirname(__FILE__) + '/static'
 enable :sessions
 
 use Rack::Flash
+
+resolv = Resolv.new
 
 today = nil
 times = %w[8:00 8:30 9:00 9:30 10:00 10:30 11:00 11:30 12:00 12:30 13:00 13:30 14:00 14:30 15:00 15:30 16:00 16:30 17:00]
 
 reservations = nil
-ips = nil
 
 before do
   if today != Date.today
     reservations = Hash[times.zip([nil])]
-    ips = []
     today = Date.today
   end
 end
@@ -29,10 +32,10 @@ get '/' do
 end
 
 post '/' do
-  unless ips.include?(request.ip)
+  name = resolv.getname(request.ip)
+  unless reservations.has_value?(name)
     if reservations[params[:time]].nil?
-      reservations[params[:time]] = params[:name]
-      # ips << request.ip
+      reservations[params[:time]] = name
       flash[:notice] = "Reservation made."
     else
       flash[:error] = "Ouch! Someone has made a reservation on this time in this moment."
@@ -59,45 +62,78 @@ __END__
   %body
     = yield
 
-
 @@ index
 %div.top
   - if notice
-    %p.notice= notice
+    %div.notice
+      %p= notice
   - if error
-    %p.error= error
-%div.left
+    %div.error
+      %p= error
+%div.table
   %table
     %thead
       %tr
-        %td Hour
-        %td Occupied
+        %th Hour
+        %th Occupied
     %tbody
       - times.each do |time|
         %tr
           %td= time
-          %td= reservations[time]
+          %td
+            - if reservations[time].nil?
+              %form{:action => '/', :method => :post}
+                %input{:type => :hidden, :name => 'time', :value => time}
+                %input{:type => :submit, :value => "Reserve"}
+            - else
+              = reservations[time]
 
-%div.right
-  %form{:action => '/', :method => :post}
-    My name is
-    %input{:type => :text, :name => "name"}
-    and I would like to make a reservation of the foosball table on
-    %select{:name => "time"}
-      - available.each do |time|
-        %option= time.nil? ? "free" : time
-    %input{:type => :submit, :value => "Reserve"}
-
+%div.graphic
+  %img{:src => "/table.jpg"}
 
 @@ stylesheet
-div.top
-  width: 100%
-  margin: 10px
+.top
+  width: 45%
+  margin: 20px
+  p
+    padding: 8px
+  div
+    border-radius: 5px
+    &.notice
+      background-color: #66FF33
+    &.error
+      background-color: red
   
-div.left
+.table
+  margin: 20px
   float: left
-  margin: 10px
-  
-div.right
+
+table
+  border-color: gray
+  th
+    vertical-align: middle
+    background-color: #B9C9FE
+    &:first-child
+      border-top-left-radius: 8px
+      min-width: 60px
+    &:last-child
+      border-top-right-radius: 8px
+
+  tr
+    td
+      background-color: #E8EDFF
+      color: #669
+      padding: 8px
+    &:hover
+      td
+        background-color: #D0DAFD
+    &:last-child
+      td
+        &:first-child
+          border-bottom-left-radius: 8px
+        &:last-child
+          border-bottom-right-radius: 8px
+
+.graphic
   float: right
-  margin: 10px
+  margin: 20px
