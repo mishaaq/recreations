@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'date'
+require 'time'
 require 'sinatra'
 require 'rack-flash'
 require 'haml'
@@ -13,6 +14,17 @@ use Rack::Flash
 
 resolv = Resolv.new
 
+$localize = {
+  :"reserve-in-past" => "Cannot reserve a time in the past.",
+  :"max-reservations" => "You have already made a maximum number of reservations today.",
+  :"reservation-occupied" => "Ouch! Someone has made a reservation on this time in this moment.",
+  :"cancel-in-past" => "Cannot cancel a reservation in the past.",
+  :"cannot-cancel" => "You've tried to cancel someone's else reservation!",
+  :"reservation-made" => "Reservation made.",
+  :"reservation-canceled" => "Reservation canceled.",
+  :"exception-occured" => "The application badly behaved :(."
+}
+
 class Recreation
   def initialize(label, opening_hours, reservations_per_user=1)
     @label = label
@@ -22,24 +34,19 @@ class Recreation
   end
 
   def reserve(name, hour)
-    reservations_made = @reservations.values.select {|reservation| reservation == name}
-    if reservations_made.length < @reservations_per_user
-      if @reservations[hour].nil?
-        @reservations[hour] = name
-      else
-        raise ReservationException.new("Ouch! Someone has made a reservation on this time in this moment.")
-      end
-    else
-      raise ReservationException.new("You have already made a maximum number of reservation today.")
-    end
+    hr = Time.parse(hour.to_s)
+    raise ReservationException.new($localize[:"reserve-in-past"]) if hr < Time.now
+    made = @reservations.values.select { |reservation| reservation == name }
+    raise ReservationException.new($localize[:"max-reservations"]) unless made.length < @reservations_per_user
+    raise ReservationException.new($localize[:"reservation-occupied"]) unless @reservations[hr].nil?
+    @reservations[hr] = name
   end
   
   def cancel(name, hour)
-    if name == @reservations[hour]
-      @reservations[hour] = nil
-    else
-      raise ReservationException.new("You've tried to cancel someone's else reservation!")
-    end
+    hr = Time.parse(hour.to_s)
+    raise ReservationException.new($localize[:"cancel-in-past"]) if hr < Time.now
+    raise ReservationException.new($localize[:"cannot-cancel"]) unless name == @reservations[hr]
+    @reservations[hr] = nil
   end
   
   def label
@@ -59,8 +66,14 @@ class Recreation
 end
 
 class RecreationFactory
-  def self.create(label, hours, minutes, max_per_user=nil)
-    opening_hours = (hours.map {|h| minutes.map {|m| h.to_s+":"+m.to_s}}).flatten
+  def self.create(label, hours, interval, max_per_user=nil)
+    hrs = hours.dup
+    exclude_end = hours.respond_to?(:exclude_end?) || false
+    hrs = [hrs.first, hrs.last].map {|h| h.to_s + ":00" } if hrs.first.integer? # support (int..int) or [int, int]
+    hours_time = Range.new(Time.parse(hrs.first.to_s), Time.parse(hrs.last.to_s), exclude_end)
+    interval_time = Time.parse(interval.to_s) # support interval as String ("h:mm") or Time
+    seconds = interval_time.hour * 3600 + interval_time.min * 60 + interval_time.sec
+    opening_hours = hours_time.step(seconds).to_a
     Recreation.new(label, opening_hours, max_per_user)
   end
 end
@@ -71,8 +84,8 @@ name = ""
 
 before do
   if today != Date.today
-    foosball = RecreationFactory.create("Foosball", (8..16), ["00", "30"])
-    billard = RecreationFactory.create("Billard", (8..16), %w[00 15 30 45], 2)
+    foosball = RecreationFactory.create("Foosball", (0..17), "0:30")
+    billard = RecreationFactory.create("Billard", (0..17), "0:15", 2)
     reservations = [foosball, billard]
     today = Date.today
   end
@@ -89,13 +102,13 @@ post '/reserve' do
   begin
     reservation_id = params[:id] or raise "No reservation ID!"
     reservations[reservation_id.to_i].reserve(name, params[:time])
-    flash[:notice] = "Reservation made."
+    flash[:notice] = $localize[:"reservation-made"]
   rescue Recreation::ReservationException => e
     flash[:error] = e.message
   rescue Exception => e
     puts e.message
     puts e.backtrace.join("\n")
-    flash[:error] = "The application badly behaved :(."
+    flash[:error] = $localize[:"exception-occured"]
   end
   redirect to('/')
 end
@@ -104,13 +117,13 @@ post '/cancel' do
   begin
     reservation_id = params[:id] or raise "No reservation ID!"
     reservations[reservation_id.to_i].cancel(name, params[:time])
-    flash[:notice] = "Reservation canceled."
+    flash[:notice] = $localize[:"reservation-canceled"]
   rescue Recreation::ReservationException => e
     flash[:error] = e.message
   rescue Exception => e
     puts e.message
     puts e.backtrace.join("\n")
-    flash[:error] = "The application badly behaved :(."
+    flash[:error] = $localize[:"exception-occured"]
   end
   redirect to('/')
 end
@@ -159,20 +172,21 @@ __END__
                 %tbody
                   - time_slice.each do |time|
                     %tr
-                      %td= time
+                      %td= time.strftime("%H:%M")
+                      - disabled = time < Time.now
                       %td
                         - if reservations[time].nil?
                           %form{:action => '/reserve', :method => :post}
                             %input{:type => :hidden, :name => 'id', :value => index}
-                            %input{:type => :hidden, :name => 'time', :value => time}
-                            %input{:type => :submit, :value => "Reserve"}
+                            %input{:type => :hidden, :name => 'time', :value => time.strftime("%H:%M")}
+                            %input{:type => :submit, :value => "Reserve", :disabled => disabled}
                         - else
                           = reservations[time]
                           - if reservations[time] == name
                             %form.cancel{:action => '/cancel', :method => :post}
                               %input{:type => :hidden, :name => 'id', :value => index}
-                              %input{:type => :hidden, :name => 'time', :value => time}
-                              %button{:type => :submit}
+                              %input{:type => :hidden, :name => 'time', :value => time.strftime("%H:%M")}
+                              %button{:type => :submit, :disabled => disabled}
                                 %img{:src => "/cross.png"}
 
 %div.graphic
@@ -206,6 +220,7 @@ table
 table.recreation
   display: inline-table
   border-color: gray
+  vertical-align: top
   th
     vertical-align: middle
     background-color: #B9C9FE
