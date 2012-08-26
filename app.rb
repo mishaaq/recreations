@@ -1,19 +1,17 @@
 require 'rubygems'
 require 'date'
 require 'time'
+require 'resolv'
 require 'yaml'
 require 'sinatra'
-require 'rack-flash'
+require 'sinatra/flash'
 require 'haml'
 require 'sass'
-require 'resolv'
 
 require 'recreation'
 
-set :public, File.dirname(__FILE__) + '/static'
+set :public_folder, File.dirname(__FILE__) + '/static'
 enable :sessions
-
-use Rack::Flash
 
 resolv = Resolv.new
 
@@ -29,16 +27,15 @@ $localize = {
 }
 
 today = nil
-reservations = []
+recreations = []
 name = ""
 games = YAML.load_file('recreations.yml')
 
 before do
   if today != Date.today
-    reservations = games.keys.map do |game|
+    recreations = games.keys.map do |game|
       gm = games[game]
-      RecreationFactory.create(game.gsub("_", " ").capitalize,
-                               gm["time"], gm["interval"], gm["max_per_user"])
+      Recreation.new(game.gsub("_", " ").capitalize, gm["time"], gm["interval"], gm["max_per_user"])
     end
     today = Date.today
   end
@@ -47,14 +44,14 @@ before do
 end
 
 get '/' do
-  haml :index, :locals => { :recreations => reservations, :name => name,
+  haml :index, :locals => { :recreations => recreations, :name => name,
                             :notice => flash[:notice], :error => flash[:error] }
 end
 
 post '/reserve' do
   begin
-    reservation_id = params[:id] or raise "No reservation ID!"
-    reservations[reservation_id.to_i].reserve(name, params[:time])
+    recreation_id = params[:id].to_i or raise "No reservation ID!"
+    recreations[recreation_id].reserve(name, params[:time])
     flash[:notice] = $localize[:"reservation-made"]
   rescue Recreation::ReservationException => e
     flash[:error] = e.message
@@ -68,8 +65,8 @@ end
 
 post '/cancel' do
   begin
-    reservation_id = params[:id] or raise "No reservation ID!"
-    reservations[reservation_id.to_i].cancel(name, params[:time])
+    recreation_id = params[:id].to_i or raise "No reservation ID!"
+    recreations[recreation_id].cancel(name, params[:time])
     flash[:notice] = $localize[:"reservation-canceled"]
   rescue Recreation::ReservationException => e
     flash[:error] = e.message
@@ -126,7 +123,7 @@ __END__
                   - time_slice.each do |time|
                     %tr
                       %td= time.strftime("%H:%M")
-                      - disabled = time < Time.now
+                      - disabled = time + recreation.reservation_time.to_i < Time.now
                       %td
                         - if reservations[time].nil?
                           %form{:action => '/reserve', :method => :post}
