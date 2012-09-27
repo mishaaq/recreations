@@ -40,6 +40,18 @@ class Recreation
     Marshal::load(Marshal.dump(@reservations)).freeze
   end
 
+  def clear
+    @reservations = {}
+  end
+  
+  def dump
+    Marshal.dump(@reservations)
+  end
+  
+  def load(dump)
+    @reservations = Marshal.load(dump) unless dump.nil?
+  end
+    
   def opening_hours
     @opening_hours
   end

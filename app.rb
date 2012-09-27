@@ -3,15 +3,12 @@ require 'date'
 require 'time'
 require 'resolv'
 require 'yaml'
-require 'sinatra'
-require 'sinatra/flash'
 require 'haml'
 require 'sass'
 
 require 'recreation'
 
-set :public_folder, File.dirname(__FILE__) + '/static'
-enable :sessions
+DUMP_FILENAME = 'dump.bin'
 
 resolv = Resolv.new
 
@@ -27,16 +24,47 @@ $localize = {
 }
 
 today = nil
-recreations = []
-name = ""
+
+# Creating recreations from configuration file
 games = YAML.load_file('recreations.yml')
+recreations = games.keys.map do |game|
+  gm = games[game]
+  Recreation.new(game.gsub("_", " ").capitalize, gm["time"], gm["interval"], gm["max_per_user"])
+end
+
+# Loading reservations state
+games_data = {}
+if File.exists?(DUMP_FILENAME)
+  File.open(DUMP_FILENAME, 'r') do |file|
+    games_data = Marshal.load(file.read)
+    file.close
+  end
+  File.delete(DUMP_FILENAME)
+end
+recreations.each { |recreation| recreation.load(games_data[recreation.label]) }
+
+# At exit hook to save state
+at_exit do
+  File.open(DUMP_FILENAME, 'w') do |file|
+    games_data = {}
+    recreations.each { |recreation| games_data[recreation.label] = recreation.dump() }
+    file.write(Marshal.dump(games_data))
+    file.close
+  end
+end
+
+# Delayed loading due to at_exit hook
+require 'sinatra'
+require 'sinatra/flash'
+
+set :public_folder, File.dirname(__FILE__) + '/static'
+enable :sessions
+
+name = ""
 
 before do
   if today != Date.today
-    recreations = games.keys.map do |game|
-      gm = games[game]
-      Recreation.new(game.gsub("_", " ").capitalize, gm["time"], gm["interval"], gm["max_per_user"])
-    end
+    recreations.each { |recreation| recreation.clear }
     today = Date.today
   end
   name = resolv.getname(request.ip).split('.').first

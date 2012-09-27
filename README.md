@@ -12,7 +12,7 @@ Using gems:
 * sinatra,
 * haml,
 * sass,
-* rack-flash
+* sinatra-flash
 
 
 Configuration
