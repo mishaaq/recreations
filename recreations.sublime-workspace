@@ -1,0 +1,325 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"h",
+				"head\tTag"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"Top",
+				"TopBarView"
+			],
+			[
+				"ch",
+				"changeTopBar"
+			],
+			[
+				"call",
+				"callPRPCActionChain"
+			],
+			[
+				"rit",
+				"rightColumn"
+			],
+			[
+				"b",
+				"backgroundColor"
+			],
+			[
+				"flex",
+				"flexDirection"
+			],
+			[
+				"s",
+				"style"
+			],
+			[
+				"no",
+				"nowrap"
+			],
+			[
+				"pro",
+				"prototype"
+			],
+			[
+				"for",
+				"for\tfor (…) {…}"
+			],
+			[
+				"padding",
+				"paddingRight"
+			],
+			[
+				"font",
+				"fontWeight"
+			],
+			[
+				"to",
+				"toggleSideMenu"
+			],
+			[
+				"SideM",
+				"SideMenuView"
+			],
+			[
+				"pe",
+				"pegaLogoUri"
+			],
+			[
+				"ava",
+				"avatarUri"
+			],
+			[
+				"text",
+				"textContainer"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"st",
+				"styles"
+			],
+			[
+				"Busy",
+				"BusyIndicatorHandler"
+			],
+			[
+				"ge",
+				"getopt"
+			],
+			[
+				"Compo",
+				"Component"
+			],
+			[
+				"App",
+				"AppRegistry"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "Package Control ",
+		"selected_items":
+		[
+			[
+				"Package Control ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/zarlm/Projects/recreations"
+	],
+	"file_history":
+	[
+		"/Volumes/C/Users/zarlm/Desktop/_copy_to_usb/tweaks.sh",
+		"/Volumes/C/Users/zarlm/Desktop/_copy_to_usb/config/androidauto/stage_wifi.sh",
+		"/Volumes/C/Users/zarlm/Desktop/_copy_to_usb/config/androidauto/jci/opera/opera_dir/userjs/additionalApps.json",
+		"/Volumes/C/Users/zarlm/Desktop/_copy_to_usb/config/androidauto/jci/opera/opera_dir/userjs/additionalApps.js",
+		"/Users/zarlm/Projects/Container/web.javascript/build/js/amp-webapi.js",
+		"/Users/zarlm/Projects/acf-web-test/index.html",
+		"/Users/zarlm/Downloads/HybridClient-WindowsPhone-6.21.3/app.properties",
+		"/Users/zarlm/Downloads/HybridClient-WindowsPhone-6.21.2.6/app.properties",
+		"/Users/zarlm/Projects/AndroidAuto/headunit/hu/hu_aap.h",
+		"/Users/zarlm/Projects/AndroidAuto/headunit/mazda/outputs.cpp",
+		"/Users/zarlm/Projects/AndroidAuto/headunit/common/audio.h",
+		"/Users/zarlm/Projects/AndroidAuto/headunit/mazda/dbus/cmu_interfaces.xml",
+		"/Users/zarlm/Projects/AndroidAuto/gartnera/hu/generated.x64/hu.pb.cc",
+		"/Users/zarlm/Projects/AndroidAuto/gartnera/mazda/nm/mzd_nightmode.cpp",
+		"/Users/zarlm/Projects/AndroidAuto/gartnera/mazda/gps/mzd_gps.cpp",
+		"/Users/zarlm/Projects/Container/examples/react-native/index.js",
+		"/Users/zarlm/Downloads/pyds/run.bat",
+		"/Users/zarlm/Downloads/pyds/pyds/main.pyc",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/Bootstrap.js",
+		"/Users/zarlm/Projects/test/app.js",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/nativeComponentManager.js",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/HybridWebView.js",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/SideMenu.js",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/TopBar.js",
+		"/Users/zarlm/Projects/jsxtransformer/test.html",
+		"/Users/zarlm/Projects/jsxtransformer/input.jsx",
+		"/Users/zarlm/Projects/Container/ios/ReactNativeDemoApp/main.jsbundle",
+		"/Users/zarlm/Projects/Container/ios/ReactNativeDemoApp/server_local.js",
+		"/Users/zarlm/newAppFromPRPC.bundle",
+		"/Users/zarlm/newAppFromPRPC.js",
+		"/Users/zarlm/Projects/Container/ios/ReactNativeDemoApp/local_server.js",
+		"/Users/zarlm/Projects/Container/ios/ReactNativeDemoApp/server.js",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/DynamicContainer.js",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/TopPanel.js",
+		"/Users/zarlm/bug.js",
+		"/Users/zarlm/Projects/Container/ios/ReactNativeDemoApp/test.js",
+		"/Users/zarlm/Documents/Security Talks/Clickjacking/demo.html",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/index.js",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/react-native.sublime-project",
+		"/Users/zarlm/Projects/Container/examples/react-native/App.js",
+		"/Users/zarlm/Projects/Container/examples/react-native/Menu.js",
+		"/Users/zarlm/Projects/Container/examples/react-native/app.jsbundle",
+		"/Users/zarlm/Projects/Container/common.javascript/reactNative/main/Components.js",
+		"/Users/zarlm/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 240.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "recreations.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 367.0,
+		"last_filter": "Revers",
+		"selected_items":
+		[
+			[
+				"Revers",
+				"ReverseStatusChanged"
+			]
+		],
+		"width": 960.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 230.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
