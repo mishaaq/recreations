@@ -6,3 +6,8 @@ vendor/gems/*
 .sass-cache/*
 db/*.db
 .*.sw*
+bin/*
+Gemfile.lock
+.idea
+.bundle
+*.iml

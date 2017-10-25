@@ -4,6 +4,7 @@ class User
   # property <name>, <type>
   property :id, Serial
   property :name, String
+  property :display_name, String
 
   has n, :reservations
 end

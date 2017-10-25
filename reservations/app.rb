@@ -31,7 +31,7 @@ module Recreations
     # set :dump_errors, true        # Exception backtraces are written to STDERR (default for production/development)
     # set :show_exceptions, true    # Shows a stack trace in browser (default for development)
     # set :logging, true            # Logging in STDOUT for development and file for production (default only for development)
-    # set :public_folder, 'foo/bar' # Location for static assets (default root/public)
+    set :public_folder, Padrino.root("public") # Location for static assets (default root/public)
     # set :reload, false            # Reload application files (default in development)
     # set :default_builder, 'foo'   # Set a custom form builder (default 'StandardFormBuilder')
     # set :locale_path, 'bar'       # Set path for I18n translations (default your_apps_root_path/locale)

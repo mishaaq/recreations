@@ -37,6 +37,8 @@ module Recreations
 
     access_control.roles_for :admin do |role|
       role.project_module :accounts, '/accounts'
+      role.project_module :recreations, '/recreations'
+      role.project_module :reservations, '/reservations'
     end
 
     # Custom error management 

@@ -34,6 +34,6 @@ end
 
 # Mounts the core application for this project
 
-Padrino.mount('Recreations::Reservations', :app_file => Padrino.root('reservations/app.rb')).to('/reservations')
+Padrino.mount('Recreations::Reservations', :app_file => Padrino.root('reservations/app.rb')).to('/reserve')
 
 Padrino.mount("Recreations::Admin", :app_file => Padrino.root('app/app.rb')).to("/")

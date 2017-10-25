@@ -28,8 +28,10 @@ gem 'dm-timestamps'
 gem 'dm-migrations'
 gem 'dm-constraints'
 gem 'dm-aggregates'
+gem 'dm-transactions'
 gem 'dm-types'
 gem 'dm-core'
+gem 'dm-accepts_nested_attributes', :github => 'snusnu/dm-accepts_nested_attributes'
 
 # Test requirements
 gem 'mocha', :group => 'test', :require => false

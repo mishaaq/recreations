@@ -1,0 +1,34 @@
+<% error = @recreation.errors.key?(:name) && @recreation.errors[:name].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :name, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :name, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:name) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% f.fields_for :reservation_settings do |settings_form| %>
+<% error = @reservation_settings.errors.key?(:for_time) && @reservation_settings.errors[:for_time].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= settings_form.label :for_time, :class => 'control-label' %>
+  <div class='controls'>
+    <%= settings_form.text_field :for_time, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? settings_form.error_message_on(:for_time) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @reservation_settings.errors.key?(:slots) && @reservation_settings.errors[:slots].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= settings_form.label :slots, :class => 'control-label' %>
+  <div class='controls'>
+    <%= settings_form.text_field :slots, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? settings_form.error_message_on(:slots) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% end %>
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  &nbsp;
+  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:recreations, :index), :class => 'btn btn-default' %>
+</div>

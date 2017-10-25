@@ -1,0 +1,7 @@
+<%= f.hidden_field :time %>
+<%= f.hidden_field :recreation_id %>
+<button type="submit" class="btn-block list-group-item <% if not_available? @reservation %>disabled<% end %>">
+  <%= @reservation.time.strftime("%H:%M") %>
+  <% if !@reservation.user.nil? %><span class="badge"><%= @reservation.user.display_name %></span><% end %>
+  <% if already_taken? @reservation %><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><% end %>
+</button>
