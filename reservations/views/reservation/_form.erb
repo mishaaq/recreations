@@ -1,7 +1,11 @@
 <%= f.hidden_field :time %>
 <%= f.hidden_field :recreation_id %>
-<button type="submit" class="btn-block list-group-item <% if not_available? @reservation %>disabled<% end %>">
+<button type="submit" data-control="reserve-action" class="btn-block list-group-item <% if not_available? @reservation %>disabled<% end %>">
   <%= @reservation.time.strftime("%H:%M") %>
-  <% if !@reservation.user.nil? %><span class="badge"><%= @reservation.user.display_name %></span><% end %>
-  <% if already_taken? @reservation %><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><% end %>
+  <% if !@reservation.user.nil? %><span data-control="display-name" class="label label-info"><%= @reservation.user.display_name %></span><% end %>
+  <% if already_taken? @reservation %>
+    <span data-control="reserve-action-icon-cancel" class="badge"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
+  <% else %>
+    <span data-control="reserve-action-icon-ok" class="badge"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+  <% end %>
 </button>

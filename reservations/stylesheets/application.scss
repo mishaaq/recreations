@@ -1,0 +1,22 @@
+$green-color: #5cb85c;
+$red-color: #d9534f;
+
+span[data-control="display-name"] {
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+button[data-control="reserve-action"] {
+  span[data-control*="reserve-action-icon"] {
+    visibility: hidden;
+    background-color: $green-color;
+
+    &[data-control*="reserve-action-icon-cancel"] {
+      background-color: $red-color;
+    }
+  }
+
+  &:not(.disabled):hover span[data-control*="reserve-action-icon"] {
+    visibility: visible;
+  }
+}
