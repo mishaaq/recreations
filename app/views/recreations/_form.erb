@@ -7,19 +7,19 @@
   </div>
 </fieldset>
 <% f.fields_for :reservation_settings do |settings_form| %>
-<% error = @reservation_settings.errors.key?(:for_time) && @reservation_settings.errors[:for_time].count > 0 %>
+<% error = @recreation.reservation_settings.errors.key?(:for_time) && @recreation.reservation_settings.errors[:for_time].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= settings_form.label :for_time, :class => 'control-label' %>
   <div class='controls'>
-    <%= settings_form.text_field :for_time, :class => 'form-control input-xlarge input-with-feedback' %>
+    <%= settings_form.time_field :for_time, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? settings_form.error_message_on(:for_time) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
-<% error = @reservation_settings.errors.key?(:slots) && @reservation_settings.errors[:slots].count > 0 %>
+<% error = @recreation.reservation_settings.errors.key?(:slots) && @recreation.reservation_settings.errors[:slots].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= settings_form.label :slots, :class => 'control-label' %>
   <div class='controls'>
-    <%= settings_form.text_field :slots, :class => 'form-control input-xlarge input-with-feedback' %>
+    <%= settings_form.number_field :slots, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? settings_form.error_message_on(:slots) : "Ex: a simple text" %></span>
   </div>
 </fieldset>

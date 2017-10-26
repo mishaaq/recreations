@@ -8,16 +8,15 @@ Recreations::Admin.controllers :recreations do
   get :new do
     @title = pat(:new_title, :model => 'recreation')
     @recreation = Recreation.new
-    @reservation_settings.new
+    @recreation.reservation_settings = ReservationSettings.new
     render 'recreations/new'
   end
 
   post :create do
     @recreation = Recreation.new(params[:recreation])
-    @recreation.reservation_settings = ReservationSettings.new(params[:reservation_settings])
     Recreation.transaction do |t|
       begin
-        if @recreation.save && @recreation.reservation_settings.save
+        if @recreation.save
           @title = pat(:create_title, :model => "recreation #{@recreation.id}")
           flash[:success] = pat(:create_success, :model => 'Recreation')
           params[:save_and_continue] ? redirect(url(:recreations, :index)) : redirect(url(:recreations, :edit, :id => @recreation.id))
@@ -35,7 +34,6 @@ Recreations::Admin.controllers :recreations do
   get :edit, :with => :id do
     @title = pat(:edit_title, :model => "recreation #{params[:id]}")
     @recreation = Recreation.get(params[:id])
-    @reservation_settings = ReservationSettings.get(:recreation_id => @recreation.id)
     if @recreation
       render 'recreations/edit'
     else
@@ -50,7 +48,7 @@ Recreations::Admin.controllers :recreations do
     if @recreation
       Recreation.transaction do |t|
         begin
-          if @recreation.update(params[:recreation]) && @recreation.reservation_settings.update(params[:reservation_settings].merge({:recreation_id => params[:id]}))
+          if @recreation.update(params[:recreation])
             flash[:success] = pat(:update_success, :model => 'Recreation', :id =>  "#{params[:id]}")
             params[:save_and_continue] ?
               redirect(url(:recreations, :index)) :
