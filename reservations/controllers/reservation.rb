@@ -1,10 +1,17 @@
 Recreations::Reservations.controllers :reservation do
   layout 'application'
 
+  resolv = Resolv.new
+
   before do # get user
     @current_user = User.first_or_new({:name => request.ip})
     unless @current_user.saved?
-      @current_user.display_name = resolv.getname(request.ip) rescue @current_user.name
+      begin
+        display_name = resolv.getname(request.ip)
+      rescue ResolvError => e
+        display_name = @current_user.name
+      end
+      @current_user.display_name = display_name
       @current_user.save
       # TODO: add unhappy path
     end

@@ -1,22 +1,32 @@
 $green-color: #5cb85c;
 $red-color: #d9534f;
 
+div[data-control="main"] {
+  padding-top: 70px;
+}
+
+div[data-control="footer"] {
+  border-top: 1px;
+}
+
 span[data-control="display-name"] {
   font-size: 14px;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 button[data-control="reserve-action"] {
   span[data-control*="reserve-action-icon"] {
-    visibility: hidden;
-    background-color: $green-color;
+    color: $green-color;
+    float: right;
+    font-size: 18px;
 
     &[data-control*="reserve-action-icon-cancel"] {
-      background-color: $red-color;
+      color: $red-color;
     }
   }
 
-  &:not(.disabled):hover span[data-control*="reserve-action-icon"] {
-    visibility: visible;
+  &.disabled span[data-control*="reserve-action-icon"] {
+    visibility: hidden;
   }
 }
