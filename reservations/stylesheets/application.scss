@@ -1,13 +1,81 @@
 $green-color: #5cb85c;
 $red-color: #d9534f;
 
+$navbar-height: 100px;
+
+.navbar {
+
+  .navbar-nav {
+    margin: 0 !important;
+
+    &.pull-left {
+
+      li {
+        float: left;
+      }
+
+      .navbar-brand {
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+      }
+    }
+    li > a {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+  }
+
+  .navbar-right {
+    margin-right: 0 !important;
+  }
+}
+
+div[data-control="alert-container"] {
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin: 0 5%;
+
+  .alert {
+    margin-bottom: 10px;
+  }
+}
+
 div[data-control="main"] {
-  padding-top: 70px;
+  padding-top: $navbar-height;
 }
 
 div[data-control="footer"] {
   border-top: 1px;
 }
+
+[data-control="anchor-target"] {
+  position: relative;
+  border-top: $navbar-height solid transparent;
+  margin: -$navbar-height 0 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+
+  @for $i from 1 through 100 {
+    &:nth-child(#{$i}) {
+      z-index: #{100 - $i};
+    }
+  }
+
+  &:before {
+    content: ' ';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    border-top: 1px solid transparent;
+  }
+}
+
+
 
 span[data-control="display-name"] {
   font-size: 14px;

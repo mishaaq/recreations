@@ -19,13 +19,48 @@ module Recreations
       end
 
 			def not_available?(reservation)
+        return true if in_the_past?(reservation)
         return false if already_taken?(reservation)
-        !reservation.user.nil? or reservation.time < DateTime.now or
-            @current_user.reservations.count({:recreation => reservation.recreation}) >= reservation.recreation.reservation_settings.slots
+        reserved?(reservation) or max_slots_reached?(reservation)
+      end
+
+      def max_slots_reached?(reservation)
+        @current_user.reservations.today.count({:recreation => reservation.recreation}) >= reservation.recreation.reservation_settings.slots
+      end
+
+      def reserved?(reservation)
+        !reservation.user.nil?
+      end
+
+      def in_the_past?(reservation)
+        reservation.time < DateTime.now
       end
 
       def already_taken?(reservation)
         reservation.user == @current_user
+      end
+
+      # validators
+
+      def validate_create(reservation)
+        flash.error = 'Maximum reservations made.' if max_slots_reached?(reservation)
+        flash.error = 'Cannot make a reservation in the past.' if in_the_past?(reservation)
+        flash.error = 'Reservation made by someone else' if reserved?(reservation)
+        flash.error = 'Reservation already made.' if already_taken?(reservation)
+
+        flash.next.empty?
+      end
+
+      def validate_delete(reservation)
+        flash.error = 'Cannot cancel someone else reservation.' unless already_taken?(reservation)
+        flash.error = 'Cannot cancel reservation in the past.' if in_the_past?(reservation)
+
+        flash.next.empty?
+      end
+
+
+      def reservation_anchor(reservation)
+        "r#{reservation.recreation_id}-#{reservation.time.strftime('%H_%M')}"
       end
     end
 

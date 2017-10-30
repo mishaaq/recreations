@@ -6,5 +6,5 @@ class User
   property :name, String
   property :display_name, String
 
-  has n, :reservations
+  has n, :reservations, :constraint => :destroy
 end

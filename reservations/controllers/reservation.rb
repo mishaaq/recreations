@@ -8,7 +8,7 @@ Recreations::Reservations.controllers :reservation do
     unless @current_user.saved?
       begin
         display_name = resolv.getname(request.ip)
-      rescue ResolvError => e
+      rescue Resolv::ResolvError => e
         display_name = @current_user.name
       end
       @current_user.display_name = display_name
@@ -42,15 +42,26 @@ Recreations::Reservations.controllers :reservation do
   end
 
   post :create do
-    @reservation = Reservation.create(params[:reservation].merge({:user_id => @current_user.id}))
-    redirect url_for(:reservation, :index)
+    @reservation = Reservation.first_or_new(params[:reservation])
+    if validate_create(@reservation)
+      @reservation.user = @current_user
+      @reservation.save
+      flash.success = 'Reservation made.'
+    end
+    redirect url_for(:reservation, :index) + "##{reservation_anchor(@reservation)}"
   end
 
   delete :destroy, :with => :id do
-    # TODO: add authorization
     @reservation = Reservation.get(params[:id])
-    @reservation.destroy
-    redirect url_for(:reservation, :index)
+    if @reservation.nil?
+      halt 404
+    end
+
+    if validate_delete(@reservation)
+      @reservation.destroy
+      flash.success = 'Reservation canceled.'
+    end
+    redirect url_for(:reservation, :index) + "##{reservation_anchor(@reservation)}"
   end
 
 end

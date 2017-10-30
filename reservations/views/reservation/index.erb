@@ -1,19 +1,19 @@
 <div class="container">
   <div class="row">
     <% for @recreation in @recreations %>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <div data-control="anchor-target" class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="<%= @recreation.name.gsub(' ', '_') %>">
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title"><%= @recreation.name %></h3>
           </div>
-          <ul class="list-group">
+          <ul data-control="time-table" class="list-group">
             <% for @reservation in @reservations[@recreation.name] %>
               <% if already_taken? @reservation %>
-                <% form_for :reservation, url(:reservation, :destroy, :id => @reservation.id), :method => :delete do |f| %>
+                <% form_for :reservation, url(:reservation, :destroy, :id => @reservation.id), :id => reservation_anchor(@reservation), :'data-control' => "anchor-target", :method => :delete do |f| %>
                   <%= partial 'reservation/form', :locals => { :f => f } %>
                 <% end %>
               <% else %>
-                <% form_for :reservation, url(:reservation, :create) do |f| %>
+                <% form_for :reservation, url(:reservation, :create), :'data-control' => "anchor-target", :id => reservation_anchor(@reservation) do |f| %>
                   <%= partial 'reservation/form', :locals => { :f => f } %>
                 <% end %>
               <% end %>

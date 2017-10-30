@@ -1,6 +1,6 @@
 <%= f.hidden_field :time %>
 <%= f.hidden_field :recreation_id %>
-<button type="submit" data-control="reserve-action" class="btn-block list-group-item <% if not_available? @reservation %>disabled<% end %>">
+<button type="submit" data-control="reserve-action" class="btn-block list-group-item <% if not_available? @reservation %>disabled<% end %>" <% if not_available? @reservation %>disabled<% end %>>
   <%= @reservation.time.strftime("%H:%M") %>
   <% if !@reservation.user.nil? %><span data-control="display-name" class="label label-info"><%= @reservation.user.display_name %></span><% end %>
   <% if already_taken? @reservation %>
