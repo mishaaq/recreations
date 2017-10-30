@@ -25,9 +25,11 @@ $navbar-height: 100px;
     display: -moz-flex;
     display: -webkit-flex;
 
+    float: none;
+
     .navbar-module {
       white-space: nowrap;
-      flex: 1;
+      flex: inherit;
       overflow: hidden;
 
       a {
