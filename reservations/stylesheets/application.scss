@@ -3,8 +3,10 @@ $red-color: #d9534f;
 
 $navbar-height: 100px;
 
-.col-xl-2 {
-  width: 20%;
+@media (min-width: 1600px) {
+  .col-xl-2 {
+    width: 20%;
+  }
 }
 
 .navbar {
@@ -12,17 +14,27 @@ $navbar-height: 100px;
   .navbar-nav {
     margin: 0 !important;
 
-    &.pull-left {
+    display: flex;
+    display: -moz-flex;
+    display: -webkit-flex;
 
-      li {
-        float: left;
-      }
+    .navbar-module {
+      white-space: nowrap;
+      flex: 1;
+      overflow: hidden;
 
-      .navbar-brand {
-        padding-left: 0 !important;
-        margin-left: 0 !important;
+      a {
+        -ms-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
+
+    .navbar-brand {
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+    }
+
     li > a {
       padding-top: 10px !important;
       padding-bottom: 10px !important;

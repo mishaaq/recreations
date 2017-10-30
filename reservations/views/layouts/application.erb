@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name=viewport content='width=device-width,initial-scale=1' />
     <title>Reservations 2.0</title>
-    <%= javascript_include_tag 'jquery', 'bootstrap.min', 'jquery-ujs' %>
+    <%= javascript_include_tag 'jquery', 'bootstrap.min', 'jquery-ujs', 'application' %>
     <%= stylesheet_link_tag 'bootstrap', 'bootstrapXL', 'bootstrap-theme', 'application' %>
   </head>
   <body>
@@ -16,7 +16,7 @@
         <p class="navbar-text navbar-right pull-right">@<a class="navbar-link"><%= @current_user.display_name %></a></p>
       </div>
       <div class="container row">
-        <ul class="nav navbar-nav pull-left">
+        <ul class="nav navbar-nav">
           <% @recreations.each do |recreation| %>
             <li class=navbar-module>
               <%= link_to recreation.name, "##{recreation.name.gsub(' ', '_')}" %>
