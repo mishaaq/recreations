@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <% for @recreation in @recreations %>
-      <div data-control="anchor-target" class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="<%= @recreation.name.gsub(' ', '_') %>">
+      <div data-control="anchor-target" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" id="<%= @recreation.name.gsub(' ', '_') %>">
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title"><%= @recreation.name %></h3>
