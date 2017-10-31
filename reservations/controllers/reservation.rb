@@ -7,7 +7,7 @@ Recreations::Reservations.controllers :reservation do
     @current_user = User.first_or_new({:name => request.ip})
     unless @current_user.saved?
       begin
-        display_name = resolv.getname(request.ip)
+        display_name = resolv.getname(request.ip).split('.').first
       rescue Resolv::ResolvError => e
         display_name = @current_user.name
       end
