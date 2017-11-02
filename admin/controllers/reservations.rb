@@ -8,6 +8,8 @@ Recreations::Admin.controllers :reservations do
   get :new do
     @title = pat(:new_title, :model => 'reservation')
     @reservation = Reservation.new
+    @users = User.all
+    @recreations = Recreation.all
     render 'reservations/new'
   end
 
@@ -27,6 +29,8 @@ Recreations::Admin.controllers :reservations do
   get :edit, :with => :id do
     @title = pat(:edit_title, :model => "reservation #{params[:id]}")
     @reservation = Reservation.get(params[:id])
+    @users = User.all
+    @recreations = Recreation.all
     if @reservation
       render 'reservations/edit'
     else
