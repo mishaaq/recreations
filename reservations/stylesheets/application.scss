@@ -17,10 +17,17 @@ $navbar-height: 100px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
     margin: 0;
   }
-  
+
   .navbar-nav {
     margin: 0 !important;
 
+    .navbar-brand {
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+    }
+  }
+
+  .navbar-links {
     display: flex;
     display: -moz-flex;
     display: -webkit-flex;
@@ -39,11 +46,6 @@ $navbar-height: 100px;
       }
     }
 
-    .navbar-brand {
-      padding-left: 0 !important;
-      margin-left: 0 !important;
-    }
-
     li > a {
       padding-top: 10px !important;
       padding-bottom: 10px !important;
@@ -51,7 +53,7 @@ $navbar-height: 100px;
   }
 
   .navbar-right {
-    margin-right: 0 !important;
+    margin-right: 5px !important;
   }
 }
 
@@ -76,10 +78,17 @@ div[data-control="footer"] {
   border-top: 1px;
 }
 
+.reservations-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: 30px;
+  margin: 0 15px;
+}
+
 [data-control="anchor-target"] {
   position: relative;
   border-top: $navbar-height solid transparent;
-  margin: -$navbar-height 0 0;
+  margin-top: -$navbar-height;
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
@@ -109,9 +118,17 @@ span[data-control="display-name"] {
 }
 
 button[data-control="reserve-action"] {
+
+  display: flex;
+
+  span[data-control="display-name"] {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+
   span[data-control*="reserve-action-icon"] {
     color: $green-color;
-    float: right;
+    margin-left: auto;
     font-size: 18px;
 
     &[data-control*="reserve-action-icon-cancel"] {
