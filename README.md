@@ -7,25 +7,22 @@ Overview
 This is simple application to make reservations of something for a specified time.
 It might help stop fighting for the soccer table in a company :).
 
-Using gems:
+It's built upon Padrino (padrinorb.com)
 
-* sinatra,
-* haml,
-* sass,
-* sinatra-flash
-
-
-Configuration
+Installation
 -------
 
-Sample recreations are defined in recreations.yml. Please specify your ones:
+It uses bundler to manage required gems, so there are few steps needed to settle everything down:
 
-  * key - the name of a recreation
-  * time - range of hours for whom the reservation could be made
-  * interval - amount of time for one reservation
-  * max_per_user - maximal number of reservations that could be made by one user
-  
+
+    git clone https://github.com/mishaaq/recreations.git
+    cd recreations
+    bundle install
+    RACK_ENV=production bundle exec rake db:create db:migrate db:seed
+
 Loading
 -------
 
-    ruby app.rb
+Run the server:
+
+    RACK_ENV=production rackup config.ru

@@ -3,7 +3,7 @@
   <%= f.label :name, :class => 'control-label' %>
   <div class='controls'>
     <%= f.text_field :name, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
-    <span class='help-inline'><%= error ? f.error_message_on(:name) : "Ex: a simple text" %></span>
+    <span class='help-inline'><%= error ? f.error_message_on(:name) : "" %></span>
   </div>
 </fieldset>
 <% f.fields_for :reservation_settings do |settings_form| %>
@@ -12,7 +12,7 @@
   <%= settings_form.label :for_time, :class => 'control-label' %>
   <div class='controls'>
     <%= settings_form.time_field :for_time, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? settings_form.error_message_on(:for_time) : "Ex: a simple text" %></span>
+    <span class='help-inline'><%= error ? settings_form.error_message_on(:for_time) : "For how long in format HH:MM" %></span>
   </div>
 </fieldset>
 <% error = @recreation.reservation_settings.errors.key?(:slots) && @recreation.reservation_settings.errors[:slots].count > 0 %>
@@ -20,7 +20,7 @@
   <%= settings_form.label :slots, :class => 'control-label' %>
   <div class='controls'>
     <%= settings_form.number_field :slots, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? settings_form.error_message_on(:slots) : "Ex: a simple text" %></span>
+    <span class='help-inline'><%= error ? settings_form.error_message_on(:slots) : "Max number of reservations for one day for one user" %></span>
   </div>
 </fieldset>
 <% end %>

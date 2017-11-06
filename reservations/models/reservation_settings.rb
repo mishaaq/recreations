@@ -9,7 +9,9 @@ class ReservationSettings
 
   belongs_to :recreation
 
-  validates_presence_of :for_time, :slots
+  validates_presence_of :recreation_id
+  validates_presence_of :for_time
+  validates_presence_of :slots
   validates_numericality_of :slots
 
   before :save do |reservation_settings|

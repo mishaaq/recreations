@@ -1,0 +1,20 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav pull-left">
+      <%= link_to 'Reservations', url(:reservation, :index), :class => 'navbar-brand', :title => 'Reservations' %>
+    </ul>
+    <p class="navbar-text navbar-right pull-right">
+      @<a class="navbar-link" data-control="display-name" data-type="text" data-url="<%= Recreations::Base.url(:user, :update) %>" data-placement="bottom" data-showbuttons="false" data-send="always"><%= @current_user.display_name %></a>
+    </p>
+  </div>
+  <hr/>
+  <div class="container row">
+    <ul class="nav navbar-nav navbar-links">
+      <% @recreations.each do |recreation| %>
+          <li class=navbar-module>
+            <%= link_to recreation.name, "##{recreation.name.gsub(' ', '_')}" %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

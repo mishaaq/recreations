@@ -10,6 +10,9 @@ class Reservation
   belongs_to :user
   belongs_to :recreation
 
+  validates_presence_of :time
+  validates_presence_of :user_id
+  validates_presence_of :recreation_id
 
   def self.today(query={})
     now = Time.now
