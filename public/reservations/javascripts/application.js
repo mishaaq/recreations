@@ -15,4 +15,11 @@ $(document).ready(function () {
 
     return false;
   });
+
+  $.fn.editable.defaults.ajaxOptions = {type: "put"};
+  $('[data-control="display-name"]').editable({
+    params: {
+      authenticity_token: CSRF
+    }
+  });
 });

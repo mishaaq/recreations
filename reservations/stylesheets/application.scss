@@ -3,10 +3,8 @@ $red-color: #d9534f;
 
 $navbar-height: 100px;
 
-@media (min-width: 1600px) {
-  .col-xl-2 {
-    width: 20%;
-  }
+.editableform-loading, .editable-clear-x {
+  background: none;
 }
 
 .navbar {
