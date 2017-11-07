@@ -3,7 +3,7 @@
   <%= f.label :time, :class => 'control-label' %>
   <div class='controls'>
     <%= f.datetime_local_field :time, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
-    <span class='help-inline'><%= error ? f.error_message_on(:time) : "In format: yyyy-mm-ddThh:ss" %></span>
+    <span class='help-inline'><%= error ? f.error_message_on(:time) : "In format: yyyy-mm-ddThh:mm" %></span>
   </div>
 </fieldset>
 <% error = @reservation.errors.key?(:user_id) && @reservation.errors[:user_id].count > 0 %>

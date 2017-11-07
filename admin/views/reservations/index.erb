@@ -51,9 +51,9 @@
             <%= check_box_tag 'reservation_ids[]', :value => reservation.id, :class => 'list-selectable-checkbox' %>
            </td>
           <td class=list-column> <%= reservation.id %> </td>
-          <td class=list-column> <%= reservation.time %> </td>
-          <td class=list-column> <%= reservation.user_id %> </td>
-          <td class=list-column> <%= reservation.recreation_id %> </td>
+          <td class=list-column> <%= reservation.time.strftime("%F %R") %> </td>
+          <td class=list-column> <%= reservation.user.name %> (<%= reservation.user.display_name %>) </td>
+          <td class=list-column> <%= reservation.recreation.name %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:reservations, :edit, :id => reservation.id), :rel => :tooltip, :title => "#{pat(:edit)} reservation", :class => 'list-row-action-wrapper-link' %>

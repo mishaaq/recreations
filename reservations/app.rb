@@ -61,6 +61,10 @@ module Recreations
     #   end
     #
 
+    before do
+      Time.zone = Time.now.getlocal.zone
+    end
+
     register SassInitializer
   end
 end
