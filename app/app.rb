@@ -1,5 +1,7 @@
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/inflections'
+require 'active_support/core_ext/date_time/conversions'
+require 'active_support/core_ext/time/zones'
 
 module Recreations
   class Base < Padrino::Application
@@ -22,5 +24,10 @@ module Recreations
     #
 
     enable  :sessions
+
+    before do
+      Time.zone = Time.now.getlocal.zone
+    end
+
   end
 end

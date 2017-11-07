@@ -1,7 +1,7 @@
 Recreations::Admin.controllers :reservations do
   get :index do
     @title = "Reservations"
-    @reservations = Reservation.all
+    @reservations = Reservation.all({:order => [ :time.desc ]})
     render 'reservations/index'
   end
 
