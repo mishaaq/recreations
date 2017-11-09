@@ -1,4 +1,6 @@
-Recreations::Reservations.controllers :reservation do
+require 'icalendar'
+
+Recreations::Reservations.controllers :reservations do
   layout 'application'
 
   resolv = Resolv.new
@@ -12,8 +14,9 @@ Recreations::Reservations.controllers :reservation do
         display_name = @current_user.name
       end
       @current_user.display_name = display_name
-      @current_user.save
-      # TODO: add unhappy path
+      unless @current_user.save
+        halt 500
+      end
     end
   end
   
@@ -42,26 +45,26 @@ Recreations::Reservations.controllers :reservation do
   end
 
   post :create do
-    @reservation = Reservation.first_or_new(params[:reservation])
-    if validate_create(@reservation)
-      @reservation.user = @current_user
-      @reservation.save
+    reservation = Reservation.first_or_new(params[:reservation])
+    if validate_create(reservation)
+      reservation.user = @current_user
+      reservation.save
       flash.success = 'Reservation made.'
     end
-    redirect url_for(:reservation, :index) + "##{reservation_anchor(@reservation)}"
+    redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
   end
 
   delete :destroy, :with => :id do
-    @reservation = Reservation.get(params[:id])
-    if @reservation.nil?
+    reservation = Reservation.get(params[:id])
+    if reservation.nil?
       halt 404
     end
 
-    if validate_delete(@reservation)
-      @reservation.destroy
+    if validate_delete(reservation)
+      reservation.destroy
       flash.success = 'Reservation canceled.'
     end
-    redirect url_for(:reservation, :index) + "##{reservation_anchor(@reservation)}"
+    redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
   end
 
 end

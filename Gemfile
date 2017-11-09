@@ -1,17 +1,10 @@
 source 'https://rubygems.org'
 
 # Padrino supports Ruby version 1.9 and later
-# ruby '2.3.0'
-
-# Distribute your app as a gem
-# gemspec
+ruby '2.3.0'
 
 # Server requirements
-gem 'thin' # or mongrel
-# gem 'trinidad', :platform => 'jruby'
-
-# Optional JSON codec (faster performance)
-# gem 'oj'
+gem 'thin'
 
 # Project requirements
 gem 'rake'
@@ -32,6 +25,7 @@ gem 'dm-transactions'
 gem 'dm-types'
 gem 'dm-core'
 gem 'dm-accepts_nested_attributes', :github => 'snusnu/dm-accepts_nested_attributes'
+gem 'icalendar'
 
 # Test requirements
 gem 'mocha', :group => 'test', :require => false
@@ -40,11 +34,3 @@ gem 'rack-test', :require => 'rack/test', :group => 'test'
 
 # Padrino Stable Gem
 gem 'padrino', '0.14.1.1'
-
-# Or Padrino Edge
-# gem 'padrino', :github => 'padrino/padrino-framework'
-
-# Or Individual Gems
-# %w(core support gen helpers cache mailer admin).each do |g|
-#   gem 'padrino-' + g, '0.14.1.1'
-# end
