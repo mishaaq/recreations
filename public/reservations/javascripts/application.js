@@ -17,7 +17,7 @@ $(document).ready(function () {
   });
 
   $.fn.editable.defaults.ajaxOptions = {type: "put"};
-  $('[data-control="display-name"]').editable({
+  $('[data-control="user-name"]').editable({
     params: {
       authenticity_token: CSRF
     }
