@@ -24,6 +24,7 @@ module Recreations
     def initialize
       @calendar = Icalendar::Calendar.new
       @calendar.x_wr_calname = 'Reservations'
+      @calendar.x_published_ttl = 'PT5M'
       tzid = Time.zone.name
       timezone = TZInfo::Timezone.get(tzid)
       @calendar.add_timezone(timezone.ical_timezone(Time.now))
@@ -35,9 +36,9 @@ module Recreations
         e.dtstart     = Icalendar::Values::DateTime.new(r.time, :tzid => Time.zone.name)
         e.dtend       = Icalendar::Values::DateTime.new(r.time.advance({:hours => time_interval.hour,
                                                                               :minutes => time_interval.minute}), :tzid => Time.zone.name)
-        e.summary     = "Reservation for #{r.recreation.name.downcase}."
+        e.summary     = r.recreation.name
+        e.description = "You have reservation for #{r.recreation.name.downcase}."
         #e.url         = absolute_url(:reservations, :index) + "##{reservation_anchor(r)}"
-        e.organizer   = "Reservation System"
         e.alarm do |a|
           a.action      = 'DISPLAY'
           a.summary     = "Reservation for #{r.recreation.name.downcase}."
