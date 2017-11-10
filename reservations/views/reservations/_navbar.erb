@@ -8,7 +8,7 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="main-menu" data-control="main-menu">
           <li>
-            <a href="<%= webcal_url(:calendars, :webcal, :id => @current_user.id) %>"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Subscribe to web calendar</a>
+            <a href="<%= webcal_url(:calendars, :user, :id => @current_user.id, :format => :ics) %>"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Subscribe to web calendar</a>
           </li>
         </ul>
       </li>
