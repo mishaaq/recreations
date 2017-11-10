@@ -62,7 +62,11 @@ module Recreations
     #
 
     before do
-      Time.zone = Time.now.getlocal.zone
+      Time.zone = `if [ -f /etc/timezone ]; then
+        cat /etc/timezone
+      elif [ -h /etc/localtime ]; then
+        readlink /etc/localtime | sed "s/\\/usr\\/share\\/zoneinfo\\///"
+      fi`.chomp
     end
 
     register SassInitializer
