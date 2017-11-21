@@ -4,11 +4,11 @@ module Recreations
   class Reservations
     module ReservationHelper
       
-      def create_time_table(time_interval)
+      def create_time_table(time_interval, start_time, end_time)
 				interval = Time.gm(1970, 1, 1, time_interval.hour, time_interval.min, time_interval.sec)
       	now = Time.now
-      	start_time = Time.new(now.year, now.month, now.day, 8, 0, 0)
-      	end_time = Time.new(now.year, now.month, now.day, 17, 0, 0)
+      	start_time = Time.new(now.year, now.month, now.day, start_time.hour, start_time.minute, start_time.second)
+      	end_time = Time.new(now.year, now.month, now.day, end_time.hour, end_time.minute, end_time.second)
       	time_table = []
       	current = start_time
       	begin

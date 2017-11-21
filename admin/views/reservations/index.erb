@@ -36,11 +36,11 @@
             </ul>
           </div>
         </th>
-                <th class=header> <%= mat(:reservation, :id) %></th>
-                <th class=header> <%= mat(:reservation, :time) %></th>
-                <th class=header> <%= mat(:reservation, :user_id) %></th>
-                <th class=header> <%= mat(:reservation, :recreation_id) %></th>
-                <th class="header list-row-action-header"></th>
+        <th class=header> <%= mat(:reservation, :id) %></th>
+        <th class=header> <%= mat(:reservation, :time) %></th>
+        <th class=header> <%= mat(:reservation, :user_id) %></th>
+        <th class=header> <%= mat(:reservation, :recreation_id) %></th>
+        <th class="header list-row-action-header"></th>
       </tr>
     </thead>
 
@@ -49,7 +49,7 @@
         <tr class=list-row>
           <td class="list-column list-selectable">
             <%= check_box_tag 'reservation_ids[]', :value => reservation.id, :class => 'list-selectable-checkbox' %>
-           </td>
+          </td>
           <td class=list-column> <%= reservation.id %> </td>
           <td class=list-column> <%= reservation.time.strftime("%F %R") %> </td>
           <td class=list-column> <%= reservation.user.name %> (<%= reservation.user.display_name %>) </td>

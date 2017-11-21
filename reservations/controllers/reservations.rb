@@ -26,7 +26,9 @@ Recreations::Reservations.controllers :reservations do
     @recreations.each do |recreation|
       @reservations[recreation.name] = []
       current_reservations = Reservation.today({:recreation => recreation, :order => [:time.asc]})
-      time_table = create_time_table(recreation.reservation_settings.for_time)
+      time_table = create_time_table(recreation.reservation_settings.for_time,
+                                     recreation.reservation_settings.available_from,
+                                     recreation.reservation_settings.available_to)
       @reservations[recreation.name] = time_table.map do |time|
         new_reservation = nil
         if !current_reservations.empty? && current_reservations.first.time == time
