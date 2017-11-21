@@ -24,9 +24,9 @@ class Reservation
 
   def self.today(query={})
     now = Time.now
-  	today_at_8 = Time.new(now.year, now.month, now.day, 8, 0, 0)
-  	today_at_17 = Time.new(now.year, now.month, now.day, 17, 0, 0)
-  	all({:time.gte => today_at_8, :time.lte => today_at_17}.merge(query))
+  	today_begin = Time.new(now.year, now.month, now.day, 0, 0, 0)
+  	today_end = Time.new(now.year, now.month, now.day, 23, 59, 0)
+  	all({:time.gte => today_begin, :time.lte => today_end}.merge(query))
   end
 
 end
