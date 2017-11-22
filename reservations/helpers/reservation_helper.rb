@@ -20,7 +20,7 @@ module Recreations
 
 			def not_available?(reservation)
         return true if in_the_past?(reservation)
-        return false if already_taken?(reservation)
+        return false if taken_by_me?(reservation)
         reserved?(reservation) or max_slots_reached?(reservation)
       end
 
@@ -36,7 +36,7 @@ module Recreations
         reservation.time < DateTime.now
       end
 
-      def already_taken?(reservation)
+      def taken_by_me?(reservation)
         reservation.user == @current_user
       end
 
@@ -46,13 +46,13 @@ module Recreations
         flash.error = 'Maximum reservations made.' if max_slots_reached?(reservation)
         flash.error = 'Cannot make a reservation in the past.' if in_the_past?(reservation)
         flash.error = 'Reservation made by someone else' if reserved?(reservation)
-        flash.error = 'Reservation already made.' if already_taken?(reservation)
+        flash.error = 'Reservation already made.' if taken_by_me?(reservation)
 
         flash.next.empty?
       end
 
       def validate_delete(reservation)
-        flash.error = 'Cannot cancel someone else reservation.' unless already_taken?(reservation)
+        flash.error = 'Cannot cancel someone else reservation.' unless taken_by_me?(reservation)
         flash.error = 'Cannot cancel reservation in the past.' if in_the_past?(reservation)
 
         flash.next.empty?

@@ -7,7 +7,7 @@
         </div>
         <ul data-control="time-table" class="list-group">
           <% for @reservation in @reservations[@recreation.name] %>
-            <% if already_taken? @reservation %>
+            <% if reserved? @reservation %>
               <% form_for :reservation, url(:reservations, :destroy, :id => @reservation.id), :id => reservation_anchor(@reservation), :'data-control' => "anchor-target", :method => :delete do |f| %>
                 <%= partial 'reservations/edit', :locals => { :f => f } %>
               <% end %>
