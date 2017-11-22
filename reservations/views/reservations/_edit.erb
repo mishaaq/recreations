@@ -1,0 +1,7 @@
+<%= f.hidden_field :time %>
+<%= f.hidden_field :recreation_id %>
+<div data-control="reserve-action" class="btn-block list-group-item <% if not_available? @reservation %>disabled<% end %>" <% if not_available? @reservation %>disabled<% end %>>
+  <span><%= @reservation.time.strftime("%H:%M") %></span>
+  <% if !@reservation.user.nil? %><span data-control="display-name" class="label label-info"><%= @reservation.user.display_name %></span><% end %>
+  <a role="button" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-control="reserve-action-icon-menu" data-control-href="<%= url(:calendars, :reservation, :id => @reservation.id) %>" class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></a>
+</div>

@@ -9,11 +9,11 @@
           <% for @reservation in @reservations[@recreation.name] %>
             <% if already_taken? @reservation %>
               <% form_for :reservation, url(:reservations, :destroy, :id => @reservation.id), :id => reservation_anchor(@reservation), :'data-control' => "anchor-target", :method => :delete do |f| %>
-                <%= partial 'reservations/form', :locals => { :f => f } %>
+                <%= partial 'reservations/edit', :locals => { :f => f } %>
               <% end %>
             <% else %>
               <% form_for :reservation, url(:reservations, :create), :'data-control' => "anchor-target", :id => reservation_anchor(@reservation) do |f| %>
-                <%= partial 'reservations/form', :locals => { :f => f } %>
+                <%= partial 'reservations/create', :locals => { :f => f } %>
               <% end %>
             <% end %>
           <% end %>
