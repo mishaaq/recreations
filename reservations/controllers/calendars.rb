@@ -15,4 +15,20 @@ Recreations::Reservations.controllers :calendars do
 
     calendar.to_ical
   end
+
+  get :reservation, :with => :id, :provides => :ics do
+    reservation = Reservation.get(params[:id])
+    if reservation.nil?
+      halt 404
+    end
+
+    calendar = Recreations::ReservationsCalendar.new
+    calendar << reservation
+
+    content_type 'text/calendar'
+    attachment "reservation-#{reservation.id}.ics"
+    expires 60*5, :no_cache, :no_store, :must_revalidate
+
+    calendar.to_ical
+  end
 end

@@ -1,5 +1,6 @@
 $green-color: #5cb85c;
 $red-color: #d9534f;
+$gray-color: gray;
 
 $navbar-height: 100px;
 
@@ -22,6 +23,8 @@ $navbar-height: 100px;
     .navbar-brand {
       padding-left: 0 !important;
       margin-left: 0 !important;
+      padding-bottom: 15px !important;
+      padding-top: 15px !important;
     }
 
     [data-control="main-menu"] span.glyphicon {
@@ -119,7 +122,28 @@ span[data-control="display-name"] {
   margin-right: 10px;
 }
 
-button[data-control="reserve-action"] {
+[data-control="reserve-action-menu"] .btn-link {
+  color: #333;
+
+  .glyphicon {
+    margin-right: 5px;
+    vertical-align: text-top;
+  }
+}
+
+.vertical-divider {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  display: inline-block;
+  width: 1px;
+  line-height: 32px;
+
+  &:before {
+    content: '';
+    display: inline-block;
+  }
+}
+
+[data-control="reserve-action"] {
 
   display: flex;
 
@@ -128,10 +152,14 @@ button[data-control="reserve-action"] {
     text-overflow: ellipsis;
   }
 
-  span[data-control*="reserve-action-icon"] {
+  [data-control*="reserve-action-icon"] {
     color: $green-color;
     margin-left: auto;
     font-size: 18px;
+
+    &[data-control*="reserve-action-icon-menu"] {
+      color: $gray-color;
+    }
 
     &[data-control*="reserve-action-icon-cancel"] {
       color: $red-color;
