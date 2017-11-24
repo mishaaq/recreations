@@ -21,9 +21,9 @@ module Recreations
 
   class ReservationsCalendar
 
-    def initialize
+    def initialize(calendar_name=nil)
       @calendar = Icalendar::Calendar.new
-      @calendar.x_wr_calname = 'Reservations'
+      @calendar.x_wr_calname = calendar_name unless calendar_name.nil?
       @calendar.x_published_ttl = 'PT5M'
       tzid = Time.zone.name
       timezone = TZInfo::Timezone.get(tzid)
