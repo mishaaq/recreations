@@ -6,7 +6,7 @@ Recreations::Reservations.controllers :calendars do
       halt 404
     end
 
-    calendar = Recreations::ReservationsCalendar.new
+    calendar = Recreations::ReservationsCalendar.new('Reservations')
     user.reservations.each {|r| calendar << r }
 
     content_type 'text/calendar'
