@@ -8,6 +8,10 @@ $navbar-height: 100px;
   background: none;
 }
 
+.container {
+  width: auto !important;
+}
+
 .navbar {
 
   -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
@@ -56,8 +60,8 @@ $navbar-height: 100px;
     }
 
     li > a {
-      padding-top: 10px !important;
-      padding-bottom: 10px !important;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
   }
 
