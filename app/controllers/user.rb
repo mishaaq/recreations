@@ -7,8 +7,9 @@ Recreations::Base.controllers :user do
     if current_user.nil?
       halt 404
     end
-    current_user.display_name = params[:display_name]
-    current_user.email = params[:email]
+    current_user.display_name = params[:display_name] if params.include?('email')
+    current_user.email = params[:email] if params.include?('email')
+    current_user.spark_integration = params[:spark_integration] if params.include?('spark_integration')
     if current_user.save
       current_user.to_json
     else

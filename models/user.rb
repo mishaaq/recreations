@@ -8,6 +8,7 @@ class User
   property :name, String, :required => true, :unique => true
   property :display_name, String, :required => true
   property :email, String
+  property :spark_integration, Boolean
 
   has n, :reservations, :constraint => :destroy
 

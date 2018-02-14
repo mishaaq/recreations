@@ -37,6 +37,18 @@ $(document).ready(function () {
         (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
       }
     });
+  }).on('click', '.dropdown-menu a[data-control="menu-settings"]', function (event) {
+    event.stopPropagation();
+  });
+
+  $('input[name="spark-integration"]').on('change', function (event) {
+    var value = $(event.target).is(':checked');
+    value =
+    $.ajax({
+      url: '/user/update',
+      method: 'put',
+      data: "spark_integration={0}&authenticity_token={1}".format(value, CSRF)
+    });
   });
 
   $('[data-control="user-name"]').popover({

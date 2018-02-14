@@ -8,7 +8,18 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="main-menu" data-control="main-menu">
           <li>
-            <a href="<%= webcal_url(:calendars, :user, :id => @current_user.id, :format => :ics) %>"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Subscribe to web calendar</a>
+            <a href="<%= webcal_url(:calendars, :user, :id => @current_user.id, :format => :ics) %>">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>Subscribe to web calendar
+            </a>
+          </li>
+          <li>
+            <a class="flex-row" data-control="menu-settings">
+              <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span><label for="spark-bot-notifications">Allow Spark bot notifications</label>
+              <div class="material-switch">
+                <input id="spark-bot-notifications" name="spark-integration" type="checkbox" checked="<%= @current_user.spark_integration && "checked" %>"/>
+                <label for="spark-bot-notifications" class="label-success"></label>
+              </div>
+            </a>
           </li>
         </ul>
       </li>

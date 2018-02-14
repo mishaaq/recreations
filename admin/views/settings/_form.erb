@@ -1,0 +1,13 @@
+<% error = @settings.errors.key?(:spark_bot_auth_code) && @settings.errors[:spark_bot_auth_code].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :spark_bot_auth_code, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :spark_bot_auth_code, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:spark_bot_auth_code) : "Spark bot authorization code" %></span>
+  </div>
+</fieldset>
+
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+</div>
