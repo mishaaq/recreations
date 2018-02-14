@@ -24,6 +24,7 @@ gem 'dm-aggregates'
 gem 'dm-transactions'
 gem 'dm-types'
 gem 'dm-core'
+gem 'dm-serializer'
 gem 'dm-accepts_nested_attributes', :github => 'snusnu/dm-accepts_nested_attributes'
 gem 'icalendar'
 

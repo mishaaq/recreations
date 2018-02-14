@@ -14,7 +14,14 @@
     <span class='help-inline'><%= error ? f.error_message_on(:display_name) : "Arbitrary name, ie. IP address" %></span>
   </div>
 </fieldset>
-
+<% error = @user.errors.key?(:email) && @user.errors[:email].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :email, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :email, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:email) : "Email address for Spark bot integration" %></span>
+  </div>
+</fieldset>
 
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-primary' %>

@@ -187,3 +187,23 @@ span[data-control="display-name"] {
     visibility: hidden;
   }
 }
+
+.has-feedback-left {
+  i {
+    left: 0;
+  }
+  input {
+    padding-right: 0 !important;
+    padding-left: 30px !important;
+  }
+}
+
+.popover-content .form-control {
+  width: auto;
+}
+
+.form-group-sm i.form-control-feedback {
+  line-height: 30px;
+  width: 30px;
+  height: 30px;
+}
