@@ -16,7 +16,7 @@
             <a class="flex-row" data-control="menu-settings">
               <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span><label for="spark-bot-notifications">Allow Spark bot notifications</label>
               <div class="material-switch">
-                <input id="spark-bot-notifications" name="spark-integration" type="checkbox" checked="<%= @current_user.spark_integration && "checked" %>"/>
+                <input id="spark-bot-notifications" name="spark-integration" type="checkbox" <%= @current_user.spark_integration ? 'checked' : '' %> />
                 <label for="spark-bot-notifications" class="label-success"></label>
               </div>
             </a>

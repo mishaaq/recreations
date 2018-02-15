@@ -43,7 +43,6 @@ $(document).ready(function () {
 
   $('input[name="spark-integration"]').on('change', function (event) {
     var value = $(event.target).is(':checked');
-    value =
     $.ajax({
       url: '/user/update',
       method: 'put',
