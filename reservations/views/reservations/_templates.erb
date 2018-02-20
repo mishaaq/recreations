@@ -1,0 +1,26 @@
+<div id="reservation-action-menu-template" class="hide">
+  <span data-control="reserve-action-menu" style="white-space: nowrap">
+    <a href="{0}" class="btn btn-link"><span class="glyphicon glyphicon-calendar"></span>Add to Calendar</a>
+    <span class="vertical-divider"></span>
+    <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-remove"></span>Cancel</button>
+  </span>
+</div>
+<div id="user-form-template" class="hide">
+  <form action="<%= Recreations::Base.url(:user, :update) %>" method="put">
+    <div class="control-group">
+      <div class="form-group-sm has-feedback has-feedback-left">
+        <label class="sr-only">Name</label>
+        <input type="text" class="form-control input-sm" name="display_name" value="{0}" placeholder="Name" />
+        <small class="help-block"></small>
+        <i class="glyphicon glyphicon-user form-control-feedback"></i>
+      </div>
+      <div class="form-group-sm has-feedback has-feedback-left">
+        <label class="sr-only">Email</label>
+        <input type="email" class="form-control input-sm" name="email" value="{1}" placeholder="email@domain.com"/>
+        <small class="help-block"></small>
+        <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
+      </div>
+      <input type="hidden" name="authenticity_token" value="<%= session[:csrf] %>"/>
+    </div>
+  </form>
+</div>

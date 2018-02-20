@@ -70,5 +70,6 @@ module Recreations
     end
 
     register SassInitializer
+    register SchedulerInitializer
   end
 end

@@ -51,6 +51,7 @@ Recreations::Reservations.controllers :reservations do
     if validate_create(reservation)
       reservation.user = @current_user
       reservation.save
+      schedule_notification(reservation)
       flash.success = 'Reservation made.'
     end
     redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
@@ -64,6 +65,7 @@ Recreations::Reservations.controllers :reservations do
 
     if validate_delete(reservation)
       reservation.destroy
+      unschedule_notification(reservation)
       flash.success = 'Reservation canceled.'
     end
     redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
