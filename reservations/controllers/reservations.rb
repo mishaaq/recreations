@@ -1,23 +1,25 @@
 require 'icalendar'
+require 'uuidtools'
 
 Recreations::Reservations.controllers :reservations do
   layout 'application'
 
-  resolv = Resolv.new
+  before do # get user by cookie
+    @current_user = Auth.by_cookie(cookies.signed)
+  end
 
-  before do # get user
-    @current_user = User.first_or_new({:name => request.ip})
-    unless @current_user.saved?
-      begin
-        display_name = resolv.getname(request.ip).split('.').first
-      rescue Resolv::ResolvError => e
-        display_name = @current_user.name
-      end
-      @current_user.display_name = display_name
+  before :index do # migrate user to cookie authentication
+    unless @current_user.present?
+      @current_user = Auth.by_ip(request.ip)
+      @current_user.name = UUIDTools::UUID.random_create.to_s
       unless @current_user.save
         halt 500
       end
     end
+  end
+
+  after do
+    cookie.permanent.signed['login'] = @current_user.name if @current_user.present?
   end
   
   get :index, :map => '/' do
@@ -47,6 +49,7 @@ Recreations::Reservations.controllers :reservations do
   end
 
   post :create do
+    halt 401 if @current_user.blank?
     reservation = Reservation.first_or_new(params[:reservation])
     if validate_create(reservation)
       reservation.user = @current_user
