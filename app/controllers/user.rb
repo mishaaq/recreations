@@ -1,31 +1,22 @@
 Recreations::Base.controllers :user do
-  
-  # get :index, :map => '/foo/bar' do
-  #   session[:foo] = 'bar'
-  #   render 'index'
-  # end
 
-  # get :sample, :map => '/sample/url', :provides => [:any, :js] do
-  #   case content_type
-  #     when :js then ...
-  #     else ...
-  # end
+  put :update, :provides => :json do
+    content_type :json
 
-  # get :foo, :with => :id do
-  #   "Maps to url '/foo/#{params[:id]}'"
-  # end
-
-  # get '/example' do
-  #   'Hello world!'
-  # end
-
-  put :update do
-    current_user = User.first({:name => request.ip})
+    current_user = Auth.by_cookie(cookies.signed)
     if current_user.nil?
       halt 404
     end
-    current_user.display_name = params[:value]
-    current_user.save!
+    current_user.display_name = params[:display_name] if params.include?('email')
+    current_user.email = params[:email] if params.include?('email')
+    current_user.spark_integration = params[:spark_integration] if params.include?('spark_integration')
+    if current_user.save
+      current_user.to_json
+    else
+      status 400
+      current_user.errors.to_json
+    end
+
   end
 
 end

@@ -6,6 +6,7 @@ require 'active_support/core_ext/time/zones'
 module Recreations
   class Base < Padrino::Application
     register Padrino::Helpers
+    register Padrino::Cookies
 
     ##
     # Application configuration options

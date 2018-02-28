@@ -2,6 +2,7 @@ module Recreations
   class Reservations < Padrino::Application
     register Padrino::Mailer
     register Padrino::Helpers
+    register Padrino::Cookies
     enable :sessions
 
     ##
