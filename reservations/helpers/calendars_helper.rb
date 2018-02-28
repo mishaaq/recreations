@@ -35,7 +35,7 @@ module Recreations
       @calendar.event do |e|
         e.dtstart     = Icalendar::Values::DateTime.new(r.time, :tzid => Time.zone.name)
         e.dtend       = Icalendar::Values::DateTime.new(r.time.advance({:hours => time_interval.hour,
-                                                                              :minutes => time_interval.minute}), :tzid => Time.zone.name)
+                                                                        :minutes => time_interval.minute}), :tzid => Time.zone.name)
         e.summary     = r.recreation.name
         e.description = "You have reservation for #{r.recreation.name.downcase}."
         #e.url         = absolute_url(:reservations, :index) + "##{reservation_anchor(r)}"

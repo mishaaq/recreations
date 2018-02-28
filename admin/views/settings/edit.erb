@@ -1,0 +1,5 @@
+<div class="tabs-content">
+  <% form_for :settings, url(:settings, :update, :id => @settings.id), :method => :put, :class => 'form-horizontal' do |f| %>
+    <%= partial 'settings/form', :locals => { :f => f } %>
+  <% end %>
+</div>
