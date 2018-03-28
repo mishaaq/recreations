@@ -1,7 +1,12 @@
 Recreations::Admin.controllers :reservations do
   get :index do
     @title = "Reservations"
-    @reservations = Reservation.all({:order => [ :time.desc ]})
+    @filter = {
+        :date => params[:filter_date] || DateTime.now.strftime("%m/%d/%Y")
+    }
+    date_from = DateTime.strptime(@filter[:date], "%m/%d/%Y")
+    date_to = date_from.advance({:days => 1})
+    @reservations = Reservation.all({:time => (date_from..date_to), :order => [ :time.desc ]})
     render 'reservations/index'
   end
 

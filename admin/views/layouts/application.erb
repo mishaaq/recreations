@@ -10,7 +10,8 @@
     <title><%= @title.present? ? "#{@title} | Padrino Admin" : "Padrino Admin" %></title>
     <%= favicon_tag "favicon.ico" %>
     <link href='http://fonts.googleapis.com/css?family=Varela' rel=stylesheet />
-    <%= stylesheet_link_tag 'bootstrap', 'application' %>
+    <%= javascript_include_tag 'jquery.min', (Padrino.env == :production ? 'bootstrap/bootstrap.min' : %w[bootstrap/affix bootstrap/alert bootstrap/button bootstrap/carousel bootstrap/collapse bootstrap/dropdown  bootstrap/tooltip bootstrap/transition  bootstrap/modal bootstrap/popover bootstrap/scrollspy bootstrap/tab]), 'bootstrap-datepicker.min', :application %>
+    <%= stylesheet_link_tag 'bootstrap', 'bootstrap-datepicker3.min', 'application' %>
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
@@ -47,6 +48,10 @@
       </div>
     </div>
 
+    <div class="hide">
+      <%= partial(:'templates') %>
+    </div>
+
     <footer>
       <div class='footer-wrapper container'>
         <p class='pull-left'>Copyright &copy; 2017 Michał Żarłok - Powered by Padrino v.0.14.1.1</p>
@@ -58,7 +63,5 @@
         </ul>
       </div>
     </footer>
-
-    <%= javascript_include_tag 'jquery-1.11.0.min', (Padrino.env == :production ? 'bootstrap/bootstrap.min' : %w[bootstrap/affix bootstrap/alert bootstrap/button bootstrap/carousel bootstrap/collapse bootstrap/dropdown  bootstrap/tooltip bootstrap/transition  bootstrap/modal bootstrap/popover bootstrap/scrollspy bootstrap/tab]), :application %>
   </body>
 </html>
