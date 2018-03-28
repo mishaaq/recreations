@@ -32,14 +32,11 @@ Recreations::Reservations.controllers :reservations do
                                      recreation.reservation_settings.available_from,
                                      recreation.reservation_settings.available_to)
       @reservations[recreation.name] = time_table.map do |time|
-        new_reservation = nil
         if !current_reservations.empty? && current_reservations.first.time == time
-          new_reservation = current_reservations.shift
+          current_reservations.shift
         else
-          new_reservation = Reservation.new({:recreation => recreation, :time => time})
+          Reservation.new({:recreation => recreation, :time => time})
         end
-
-        new_reservation
       end
 
       @reservations

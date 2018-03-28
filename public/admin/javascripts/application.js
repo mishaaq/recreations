@@ -1,3 +1,46 @@
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] !== 'undefined'
+        ? args[number]
+        : match
+        ;
+    });
+  };
+}
+
+$(document).ready(function () {
+
+  $(document).on('click', function (event) {
+    $('[data-toggle="popover"]').each(function () {
+      //the 'is' for buttons that trigger popups
+      //the 'has' for icons within a button that triggers a popup
+      if (!$(this).is(event.target) &&
+        $(this).has(event.target).length === 0 &&
+        $(this).next('.popover').length !== 0 &&
+        $(this).next('.popover').has(event.target).length === 0) {
+        (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false  // fix for BS 3.3.6
+      }
+    });
+  });
+
+  $('[data-control="date-filter"]').popover({
+    title: 'Show from',
+    content: function () {
+      var filterDate = filter['date'];
+      return $("#date-filter-datepicker-template").html().format(filterDate);
+    }
+  }).on('shown.bs.popover', function (event) {
+    var datepicker = $(this).next('.popover').find('[data-control="date-filter-datepicker"]');
+    datepicker.datepicker().on('changeDate', function() {
+      var searchParams = new URLSearchParams(location.search);
+      searchParams.set("filter_date", datepicker.datepicker('getFormattedDate'));
+      location.search = searchParams.toString();
+    });
+  });
+});
+
 !function($) {
   'use strict';
 
