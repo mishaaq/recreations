@@ -36,10 +36,12 @@
             </ul>
           </div>
         </th>
-                <th class=header> <%= mat(:user, :id) %></th>
-                <th class=header> <%= mat(:user, :name) %></th>
-                <th class=header> <%= mat(:user, :display_name) %></th>
-                <th class="header list-row-action-header"></th>
+        <th class="header"> <%= mat(:user, :id) %></th>
+        <th class="header"> <%= mat(:user, :name) %></th>
+        <th class="header"> <%= mat(:user, :display_name) %></th>
+        <th class="header"> <%= mat(:user, :email) %></th>
+        <th class="header"> <%= mat(:user, :spark_notifications) %></th>
+        <th class="header list-row-action-header"></th>
       </tr>
     </thead>
 
@@ -52,6 +54,8 @@
           <td class=list-column> <%= user.id %> </td>
           <td class=list-column> <%= user.name %> </td>
           <td class=list-column> <%= user.display_name %> </td>
+          <td class=list-column> <%= user.email %> </td>
+          <td class=list-column> <%if user.spark_integration %><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><% end %></td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:users, :edit, :id => user.id), :rel => :tooltip, :title => "#{pat(:edit)} user", :class => 'list-row-action-wrapper-link' %>

@@ -3,7 +3,7 @@ Recreations::Base.controllers :user do
   put :update, :provides => :json do
     content_type :json
 
-    current_user = User.first({:name => request.ip})
+    current_user = Auth.by_cookie(cookies.signed)
     if current_user.nil?
       halt 404
     end
