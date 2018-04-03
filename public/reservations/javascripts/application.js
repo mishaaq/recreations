@@ -129,4 +129,17 @@ $(document).ready(function () {
     }
   });
 
+  $('[data-control="list-participants"]').tooltip({
+    title: function () {
+      var list = "";
+      $.each($(this).attr('data-participants').split(/\s/), function(name, value) {
+        if (value) {
+          list += "<li>{0}</li>".format(value);
+        }
+      });
+      return list !== "" && $('#list-participants-template').html().format(list);
+    }
+  }).on('click', function (event) {
+    return false;
+  })
 });

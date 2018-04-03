@@ -40,6 +40,14 @@ module Recreations
         reservation.user == @current_user
       end
 
+      def participant?(reservation)
+        !reservation.participations.first(:user => @current_user).nil?
+      end
+
+      def delete_action?(reservation)
+        taken_by_me?(reservation) || participant?(reservation)
+      end
+
       # validators
 
       def validate_create(reservation)

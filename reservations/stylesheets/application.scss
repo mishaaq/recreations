@@ -1,6 +1,7 @@
 $green-color: #5cb85c;
 $red-color: #d9534f;
 $gray-color: gray;
+$blue-color: #5bc0de;
 
 $navbar-height: 100px;
 
@@ -139,12 +140,22 @@ footer {
   }
 }
 
-
-
 span[data-control="display-name"] {
   font-size: 14px;
   margin-left: 10px;
-  margin-right: 10px;
+  z-index: 1;
+}
+
+span.badge {
+  font-size: 14px;
+  font-weight: lighter;
+  margin-left: -.25em;
+  float: none !important;
+  -webkit-border-radius: 0 .25em .25em 0;
+  -moz-border-radius: 0 .25em .25em 0;
+  border-radius: 0 .25em .25em 0;
+  min-width: auto;
+  padding: .2em .6em .3em;
 }
 
 [data-control="reserve-action-menu"] .btn-link {
@@ -171,22 +182,43 @@ span[data-control="display-name"] {
 [data-control="reserve-action"] {
 
   display: flex;
+  min-height: 42px;
+
+  &:hover:not(.disabled) {
+    background-color: inherit !important;
+    -webkit-box-shadow: inset 0 0 10px 0 $green-color;
+    -moz-box-shadow: inset 0 0 10px 0 $green-color;
+    box-shadow: inset 0 0 10px 0 $green-color;
+  }
 
   span[data-control="display-name"] {
     overflow-x: hidden;
     text-overflow: ellipsis;
   }
 
+  span:last-of-type {
+    margin-right: 10px;
+  }
+
   [data-control*="reserve-action-icon"] {
     color: $green-color;
     margin-left: auto;
     font-size: 18px;
+    text-decoration: none;
 
-    &[data-control*="reserve-action-icon-menu"] {
+    &[data-control="reserve-action-icon-menu"] {
       color: $gray-color;
     }
 
-    &[data-control*="reserve-action-icon-cancel"] {
+    &[data-control="reserve-action-icon-add-me"] {
+      color: $blue-color;
+    }
+
+    &[data-control="reserve-action-icon-remove-me"] {
+      color: $red-color;
+    }
+
+    &[data-control="reserve-action-icon-cancel"] {
       color: $red-color;
     }
   }
@@ -213,6 +245,13 @@ span[data-control="display-name"] {
 .popover-content .form-control {
   width: auto;
 }
+
+.list-participants-inner {
+  padding-left: 15px;
+  text-align: left;
+  list-style-type: disc;
+}
+
 
 .form-group-sm i.form-control-feedback {
   line-height: 30px;
