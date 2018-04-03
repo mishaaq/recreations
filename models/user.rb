@@ -11,6 +11,8 @@ class User
   property :spark_integration, Boolean
 
   has n, :reservations, :constraint => :destroy
+  has n, :participations, :child_key => [ :user_id ], :constraint => :destroy
+  has n, :presences, Reservation, :through => :participations, :via => :reservation
 
   validates_presence_of :name
   validates_uniqueness_of :name

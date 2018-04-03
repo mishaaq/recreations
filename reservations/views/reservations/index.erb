@@ -8,7 +8,7 @@
         <ul data-control="time-table" class="list-group">
           <% for @reservation in @reservations[@recreation.name] %>
             <% if reserved? @reservation %>
-              <% form_for :reservation, url(:reservations, :destroy, :id => @reservation.id), :id => reservation_anchor(@reservation), :'data-control' => "anchor-target", :method => :delete do |f| %>
+              <% form_for :reservation, url(:reservations, (delete_action?(@reservation) ? :destroy : :update), :id => @reservation.id), :id => reservation_anchor(@reservation), :'data-control' => "anchor-target", :method => (delete_action?(@reservation) ? :delete : :put) do |f| %>
                 <%= partial 'reservations/edit', :locals => { :f => f } %>
               <% end %>
             <% else %>

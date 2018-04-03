@@ -57,16 +57,37 @@ Recreations::Reservations.controllers :reservations do
     redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
   end
 
+  put :update, :with => :id do
+    reservation = Reservation.get(params[:id])
+    if reservation.nil?
+      halt 404
+    end
+
+    # add self as a participant
+    if reservation.user != @current_user
+      reservation.participants << @current_user
+      reservation.save
+      flash.success = 'Participation added.'
+    end
+    redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
+  end
+
   delete :destroy, :with => :id do
     reservation = Reservation.get(params[:id])
     if reservation.nil?
       halt 404
     end
 
-    if validate_delete(reservation)
-      reservation.destroy
-      unschedule_notification(reservation)
-      flash.success = 'Reservation canceled.'
+    if reservation.user == @current_user
+      if validate_delete(reservation)
+        reservation.destroy
+        unschedule_notification(reservation)
+        flash.success = 'Reservation canceled.'
+      end
+    else
+      reservation.participations.all(:user => @current_user).destroy
+      reservation.save
+      flash.success = 'Participation removed.'
     end
     redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
   end

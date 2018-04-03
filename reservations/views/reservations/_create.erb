@@ -2,5 +2,7 @@
 <%= f.hidden_field :recreation_id %>
 <button type="submit" data-control="reserve-action" class="btn-block list-group-item <% if not_available? @reservation %>disabled<% end %>" <% if not_available? @reservation %>disabled<% end %>>
   <span><%= @reservation.time.strftime("%H:%M") %></span>
-  <span data-control="reserve-action-icon-ok" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+  <% unless not_available? @reservation %>
+    <a data-control="reserve-action-icon-ok" class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></a>
+  <% end %>
 </button>
