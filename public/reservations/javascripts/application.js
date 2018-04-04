@@ -132,7 +132,7 @@ $(document).ready(function () {
   $('[data-control="list-participants"]').tooltip({
     title: function () {
       var list = "";
-      $.each($(this).attr('data-participants').split(/\s/), function(name, value) {
+      $.each(JSON.parse($(this).attr('data-participants')) || [], function(name, value) {
         if (value) {
           list += "<li>{0}</li>".format(value);
         }
