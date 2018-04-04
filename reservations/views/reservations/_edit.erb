@@ -4,7 +4,7 @@
   <div data-control="reserve-action" class="btn-block list-group-item <% if in_the_past? @reservation %>disabled<% end %>" <% if in_the_past? @reservation %>disabled<% end %>>
     <span><%= @reservation.time.strftime("%H:%M") %></span>
     <span data-control="display-name" class="label label-info"><%= @reservation.user.display_name %></span>
-    <span class="badge" data-control="list-participants" data-toggle="tooltip" data-html="true" data-trigger="click" data-placement="bottom" data-participants="<%= User.all(:participations => {:reservation => @reservation}).map(&:display_name).join(" ") %>">+ <%= @reservation.participations.count %></span>
+    <span class="badge" data-control="list-participants" data-toggle="tooltip" data-html="true" data-trigger="click" data-placement="bottom" data-participants="<%= User.all(:participations => {:reservation => @reservation}).map(&:display_name).to_json %>">+ <%= @reservation.participations.count %></span>
     <% if !in_the_past?(@reservation) %>
       <a role="button" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-html="true" data-control="reserve-action-icon-menu" data-control-href="<%= url(:calendars, :reservation, :id => @reservation.id) %>" class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></a>
     <% end %>
@@ -13,7 +13,7 @@
   <button type="submit" data-control="reserve-action" class="btn-block list-group-item <% if in_the_past? @reservation %>disabled<% end %>" <% if in_the_past? @reservation %>disabled<% end %>>
     <span><%= @reservation.time.strftime("%H:%M") %></span>
     <span data-control="display-name" class="label label-info"><%= @reservation.user.display_name %></span>
-    <span class="badge" data-control="list-participants" data-toggle="tooltip" data-html="true" data-trigger="click" data-placement="bottom" data-participants="<%= User.all(:participations => {:reservation => @reservation}).map(&:display_name).join(" ") %>">+ <%= @reservation.participations.count %></span>
+    <span class="badge" data-control="list-participants" data-toggle="tooltip" data-html="true" data-trigger="click" data-placement="bottom" data-participants="<%= User.all(:participations => {:reservation => @reservation}).map(&:display_name).to_json %>">+ <%= @reservation.participations.count %></span>
     <% if !in_the_past?(@reservation) and participant?(@reservation) %>
       <a data-control="reserve-action-icon-remove-me" class="glyphicon glyphicon-minus-sign" aria-hidden="true"></a>
     <% elsif !in_the_past?(@reservation) %>

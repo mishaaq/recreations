@@ -66,7 +66,7 @@ module Recreations
       Time.zone = `if [ -f /etc/timezone ]; then
         cat /etc/timezone
       elif [ -h /etc/localtime ]; then
-        readlink /etc/localtime | sed "s/\\/usr\\/share\\/zoneinfo\\///"
+        echo $(basename $(dirname \`readlink /etc/localtime\`))/$(basename \`readlink /etc/localtime\`)
       fi`.chomp
     end
 
