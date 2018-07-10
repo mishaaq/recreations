@@ -25,10 +25,10 @@ class Reservation
     attribute_set(:time, new_time)
   end
 
-  def self.today(query={})
-    now = Time.now
-  	today_begin = Time.new(now.year, now.month, now.day, 0, 0, 0)
-  	today_end = Time.new(now.year, now.month, now.day, 23, 59, 0)
+  def self.at(at_date=nil, query={})
+    date = at_date || Time.now
+  	today_begin = Time.new(date.year, date.month, date.day, 0, 0, 0)
+  	today_end = Time.new(date.year, date.month, date.day, 23, 59, 0)
   	all({:time.gte => today_begin, :time.lte => today_end}.merge(query))
   end
 

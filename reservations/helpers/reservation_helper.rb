@@ -6,9 +6,6 @@ module Recreations
       
       def create_time_table(time_interval, start_time, end_time)
 				interval = Time.gm(1970, 1, 1, time_interval.hour, time_interval.min, time_interval.sec)
-      	now = Time.now
-      	start_time = Time.new(now.year, now.month, now.day, start_time.hour, start_time.minute, start_time.second)
-      	end_time = Time.new(now.year, now.month, now.day, end_time.hour, end_time.minute, end_time.second)
       	time_table = []
       	current = start_time
       	begin
@@ -25,7 +22,7 @@ module Recreations
       end
 
       def max_slots_reached?(reservation)
-        @current_user.reservations.today.count({:recreation => reservation.recreation}) >= reservation.recreation.reservation_settings.slots
+        @current_user.reservations.count({:recreation => reservation.recreation, :time.gte => Time.now.beginning_of_day}) >= reservation.recreation.reservation_settings.slots
       end
 
       def reserved?(reservation)

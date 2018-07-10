@@ -23,14 +23,21 @@ Recreations::Reservations.controllers :reservations do
   end
   
   get :index, :map => '/' do
+    @date = params[:date].present? ? Time.strptime(params[:date], "%Y-%m-%d") : Time.now
+
     @reservations = {}
     @recreations = Recreation.all
     @recreations.each do |recreation|
       @reservations[recreation.name] = []
-      current_reservations = Reservation.today({:recreation => recreation, :order => [:time.asc]})
+      current_reservations = Reservation.at(@date, {:recreation => recreation, :order => [:time.asc]})
+      start_time = Time.new(@date.year, @date.month, @date.day,
+                            recreation.reservation_settings.available_from.hour,
+                            recreation.reservation_settings.available_from.minute)
+      end_time = Time.new(@date.year, @date.month, @date.day,
+                          recreation.reservation_settings.available_to.hour,
+                          recreation.reservation_settings.available_to.minute)
       time_table = create_time_table(recreation.reservation_settings.for_time,
-                                     recreation.reservation_settings.available_from,
-                                     recreation.reservation_settings.available_to)
+                                     start_time, end_time)
       @reservations[recreation.name] = time_table.map do |time|
         if !current_reservations.empty? && current_reservations.first.time == time
           current_reservations.shift
@@ -54,7 +61,7 @@ Recreations::Reservations.controllers :reservations do
       schedule_notification(reservation)
       flash.success = 'Reservation made.'
     end
-    redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
+    redirect url_for(:reservations, :index, {:date => reservation.time.strftime("%F"), :anchor => reservation_anchor(reservation)})
   end
 
   put :update, :with => :id do
@@ -69,7 +76,7 @@ Recreations::Reservations.controllers :reservations do
       reservation.save
       flash.success = 'Participation added.'
     end
-    redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
+    redirect url_for(:reservations, :index, {:date => reservation.time.strftime("%F"), :anchor => reservation_anchor(reservation)})
   end
 
   delete :destroy, :with => :id do
@@ -89,7 +96,7 @@ Recreations::Reservations.controllers :reservations do
       reservation.save
       flash.success = 'Participation removed.'
     end
-    redirect url_for(:reservations, :index) + "##{reservation_anchor(reservation)}"
+    redirect url_for(:reservations, :index, {:date => reservation.time.strftime("%F"), :anchor => reservation_anchor(reservation)})
   end
 
 end

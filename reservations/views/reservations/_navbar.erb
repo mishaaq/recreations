@@ -14,7 +14,7 @@
           </li>
           <li>
             <a class="flex-row" data-control="menu-settings">
-              <span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span><label for="spark-bot-notifications">Allow Spark bot notifications</label>
+              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label for="spark-bot-notifications">Allow Spark bot notifications</label>
               <div class="material-switch">
                 <input id="spark-bot-notifications" name="spark-integration" type="checkbox" <%= @current_user.spark_integration ? 'checked' : '' %> />
                 <label for="spark-bot-notifications" class="label-success"></label>
@@ -32,10 +32,11 @@
   <div class="container row">
     <ul class="nav navbar-nav navbar-links">
       <% @recreations.each do |recreation| %>
-          <li class=navbar-module>
-            <%= link_to recreation.name, "##{recreation.name.gsub(' ', '_')}" %>
+          <li class="navbar-module">
+            <a href="<%= url_for "##{recreation.name.gsub(' ', '_')}" %>"><i class="flaticon-<%= recreation.name.gsub(' ', '_') %>"></i><span><%= recreation.name %></span></a>
           </li>
       <% end %>
     </ul>
   </div>
 </nav>
+<div data-control="current-date"><%= @date.strftime("%a, %F") %></div>
