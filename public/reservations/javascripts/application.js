@@ -141,5 +141,14 @@ $(document).ready(function () {
     }
   }).on('click', function (event) {
     return false;
-  })
+  });
+
+  $('div[data-control="main"]').hammer().bind("swiperight", function() {
+    var url = $('div[data-control="prev"] a').attr('href');
+    location.assign(location.pathname + url);
+  });
+  $('div[data-control="main"]').hammer().bind("swipeleft", function() {
+    var url = $('div[data-control="next"] a').attr('href');
+    location.assign(location.pathname + url);
+  });
 });
