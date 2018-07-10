@@ -1,7 +1,7 @@
-	/*
-  	Flaticon icon font: Flaticon
-  	Creation date: 09/07/2018 16:41
-  	*/
+/*
+Flaticon icon font: Flaticon
+Creation date: 10/07/2018 11:26
+*/
 
 @font-face {
   font-family: "Flaticon";
@@ -22,15 +22,16 @@
 }
 
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
   font-family: Flaticon;
   font-style: normal;
   margin-right: 5px;
 }
 
-.flaticon-Crokinole:before { content: "\f100"; }
-.flaticon-Nap_Room:before { content: "\f101"; }
-.flaticon-Table_soccer:before { content: "\f102"; }
-.flaticon-Pool_table:before { content: "\f103"; }
-.flaticon-Table_tennis:before { content: "\f104"; }
-.flaticon-Playstation_4:before { content: "\f105"; }
+.flaticon-PC_Gaming:before { content: "\f100"; }
+.flaticon-Crokinole:before { content: "\f101"; }
+.flaticon-Nap_Room:before { content: "\f102"; }
+.flaticon-Table_soccer:before { content: "\f103"; }
+.flaticon-Pool_table:before { content: "\f104"; }
+.flaticon-Table_tennis:before { content: "\f105"; }
+.flaticon-Playstation_4:before { content: "\f106"; }
