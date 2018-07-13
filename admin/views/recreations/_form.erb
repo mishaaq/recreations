@@ -35,14 +35,22 @@
     <span class='help-inline'><%= error ? settings_form.error_message_on(:available_from) : 'Recreation available from time in format HH:MM' %></span>
   </div>
 </fieldset>
-    <% error = @recreation.reservation_settings.errors.key?(:available_to) && @recreation.reservation_settings.errors[:available_to].count > 0 %>
-    <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-      <%= settings_form.label :available_to, :class => 'control-label' %>
-      <div class='controls'>
-        <%= settings_form.time_field :available_to, :class => 'form-control input-xlarge input-with-feedback' %>
-        <span class='help-inline'><%= error ? settings_form.error_message_on(:available_to) : 'Recreation available to time in format HH:MM' %></span>
-      </div>
-    </fieldset>
+<% error = @recreation.reservation_settings.errors.key?(:available_to) && @recreation.reservation_settings.errors[:available_to].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= settings_form.label :available_to, :class => 'control-label' %>
+  <div class='controls'>
+    <%= settings_form.time_field :available_to, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? settings_form.error_message_on(:available_to) : 'Recreation available to time in format HH:MM' %></span>
+  </div>
+</fieldset>
+<fieldset class="control-group <%= error ? 'has-error' : ''%>'">
+  <%= settings_form.label :weekdays, :class => 'control-label' %>
+  <div class='controls'>
+    <% [ :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday ].each do |day| %>
+      <label class="checkbox-inline"><input type="checkbox" name="recreation[reservation_settings_attributes][weekdays][]" value="<%= day %>" <%= 'checked' if @recreation.reservation_settings.weekdays.include? day %> /><%= day.to_s.capitalize %></label>
+    <% end %>
+  </div>
+</fieldset>
 <% end %>
 
 <div class="form-actions">

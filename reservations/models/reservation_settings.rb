@@ -8,6 +8,7 @@ class ReservationSettings
   property :slots, Integer
   property :available_from, DateTime, :default => DateTime.new(1970, 1, 1, 8, 0, 0)
   property :available_to, DateTime, :default => DateTime.new(1970, 1, 1, 17, 0, 0)
+  property :weekdays, Flag[ :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday ], :default => [ :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday ]
 
   belongs_to :recreation
 

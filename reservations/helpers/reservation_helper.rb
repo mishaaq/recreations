@@ -16,7 +16,7 @@ module Recreations
       end
 
 			def not_available?(reservation)
-        return true if in_the_past?(reservation)
+        return true if in_the_past?(reservation) || !weekday?(reservation)
         return false if taken_by_me?(reservation)
         reserved?(reservation) or max_slots_reached?(reservation)
       end
@@ -35,6 +35,10 @@ module Recreations
 
       def taken_by_me?(reservation)
         reservation.user == @current_user
+      end
+
+      def weekday?(reservation)
+        reservation.recreation.reservation_settings.weekdays.include?(@date.strftime("%A").downcase.to_sym)
       end
 
       def participant?(reservation)
