@@ -1,6 +1,7 @@
 <ul class="nav nav-tabs">
   <li> <%= link_to tag_icon(:list, pat(:list)), url(:recreations, :index) %></li>
-  <li class="active"> <%= link_to tag_icon(:plus, pat(:new)), url(:recreations, :new) %></li>
+  <li<% if @type == 'time_based_reservation_settings' %> class="active" <% end %>> <%= link_to tag_icon(:plus, pat(:new) + ' Time Based'), url(:recreations, :new, :type => 'time_based_reservation_settings') %></li>
+  <li<% if @type == 'slot_based_reservation_settings' %> class="active" <% end %>> <%= link_to tag_icon(:plus, pat(:new) + ' Slot Based'), url(:recreations, :new, :type => 'slot_based_reservation_settings') %></li>
 </ul>
 <div class="tabs-content">
   <% form_for :recreation, url(:recreations, :create), :class => 'form-horizontal' do |f| %>

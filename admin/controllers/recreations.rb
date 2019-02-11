@@ -6,9 +6,10 @@ Recreations::Admin.controllers :recreations do
   end
 
   get :new do
+    @type = params[:type]
     @title = pat(:new_title, :model => 'recreation')
     @recreation = Recreation.new
-    @recreation.reservation_settings = ReservationSettings.new
+    @recreation.reservation_settings = @type.camelize.constantize.new
     render 'recreations/new'
   end
 
@@ -34,6 +35,7 @@ Recreations::Admin.controllers :recreations do
   get :edit, :with => :id do
     @title = pat(:edit_title, :model => "recreation #{params[:id]}")
     @recreation = Recreation.get(params[:id])
+    @type = @recreation.reservation_settings.type.to_s.underscore
     if @recreation
       render 'recreations/edit'
     else

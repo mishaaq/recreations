@@ -30,20 +30,24 @@ Recreations::Reservations.controllers :reservations do
     @recreations.each do |recreation|
       @reservations[recreation.name] = []
       current_reservations = Reservation.at(@date, {:recreation => recreation, :order => [:time.asc]})
-      start_time = Time.new(@date.year, @date.month, @date.day,
-                            recreation.reservation_settings.available_from.hour,
-                            recreation.reservation_settings.available_from.minute)
-      end_time = Time.new(@date.year, @date.month, @date.day,
-                          recreation.reservation_settings.available_to.hour,
-                          recreation.reservation_settings.available_to.minute)
-      time_table = create_time_table(recreation.reservation_settings.for_time,
-                                     start_time, end_time)
-      @reservations[recreation.name] = time_table.map do |time|
-        if !current_reservations.empty? && current_reservations.first.time == time
-          current_reservations.shift
-        else
-          Reservation.new({:recreation => recreation, :time => time})
+      if recreation.reservation_settings.type == 'TimeBasedReservationSettings'
+        start_time = Time.new(@date.year, @date.month, @date.day,
+                              recreation.reservation_settings.available_from.hour,
+                              recreation.reservation_settings.available_from.minute)
+        end_time = Time.new(@date.year, @date.month, @date.day,
+                            recreation.reservation_settings.available_to.hour,
+                            recreation.reservation_settings.available_to.minute)
+        time_table = create_time_table(recreation.reservation_settings.for_time,
+                                       start_time, end_time)
+        @reservations[recreation.name] = time_table.map do |time|
+          if !current_reservations.empty? && current_reservations.first.time == time
+            current_reservations.shift
+          else
+            Reservation.new({:recreation => recreation, :time => time})
+          end
         end
+      else
+        @reservations[recreation.name] = current_reservations
       end
 
       @reservations

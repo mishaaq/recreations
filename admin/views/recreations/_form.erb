@@ -7,50 +7,73 @@
   </div>
 </fieldset>
 <% f.fields_for :reservation_settings do |settings_form| %>
-<% if settings_form.object.saved? %>
-  <%= settings_form.hidden_field :id %>
-  <%= settings_form.hidden_field :recreation_id %>
-<% end %>
-<% error = @recreation.reservation_settings.errors.key?(:for_time) && @recreation.reservation_settings.errors[:for_time].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= settings_form.label :for_time, :class => 'control-label' %>
-  <div class='controls'>
-    <%= settings_form.time_field :for_time, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? settings_form.error_message_on(:for_time) : 'For how long in format HH:MM' %></span>
-  </div>
-</fieldset>
-<% error = @recreation.reservation_settings.errors.key?(:slots) && @recreation.reservation_settings.errors[:slots].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= settings_form.label :slots, :class => 'control-label' %>
-  <div class='controls'>
-    <%= settings_form.number_field :slots, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? settings_form.error_message_on(:slots) : 'Max number of reservations for one day for one user' %></span>
-  </div>
-</fieldset>
-<% error = @recreation.reservation_settings.errors.key?(:available_from) && @recreation.reservation_settings.errors[:available_from].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= settings_form.label :available_from, :class => 'control-label' %>
-  <div class='controls'>
-    <%= settings_form.time_field :available_from, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? settings_form.error_message_on(:available_from) : 'Recreation available from time in format HH:MM' %></span>
-  </div>
-</fieldset>
-<% error = @recreation.reservation_settings.errors.key?(:available_to) && @recreation.reservation_settings.errors[:available_to].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= settings_form.label :available_to, :class => 'control-label' %>
-  <div class='controls'>
-    <%= settings_form.time_field :available_to, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? settings_form.error_message_on(:available_to) : 'Recreation available to time in format HH:MM' %></span>
-  </div>
-</fieldset>
-<fieldset class="control-group <%= error ? 'has-error' : ''%>'">
-  <%= settings_form.label :weekdays, :class => 'control-label' %>
-  <div class='controls'>
-    <% [ :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday ].each do |day| %>
-      <label class="checkbox-inline"><input type="checkbox" name="recreation[reservation_settings_attributes][weekdays][]" value="<%= day %>" <%= 'checked' if @recreation.reservation_settings.weekdays.include? day %> /><%= day.to_s.capitalize %></label>
-    <% end %>
-  </div>
-</fieldset>
+  <%= settings_form.hidden_field :type %>
+  <% if settings_form.object.saved? %>
+    <%= settings_form.hidden_field :id %>
+    <%= settings_form.hidden_field :recreation_id %>
+  <% end %>
+  <% if @type == 'time_based_reservation_settings' %>
+    <% error = @recreation.reservation_settings.errors.key?(:for_time) && @recreation.reservation_settings.errors[:for_time].count > 0 %>
+    <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+      <%= settings_form.label :for_time, :class => 'control-label' %>
+      <div class='controls'>
+        <%= settings_form.time_field :for_time, :class => 'form-control input-xlarge input-with-feedback' %>
+        <span class='help-inline'><%= error ? settings_form.error_message_on(:for_time) : 'For how long in format HH:MM' %></span>
+      </div>
+    </fieldset>
+    <% error = @recreation.reservation_settings.errors.key?(:slots) && @recreation.reservation_settings.errors[:slots].count > 0 %>
+    <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+      <%= settings_form.label :slots, :class => 'control-label' %>
+      <div class='controls'>
+        <%= settings_form.number_field :slots, :class => 'form-control input-xlarge input-with-feedback' %>
+        <span class='help-inline'><%= error ? settings_form.error_message_on(:slots) : 'Max number of reservations for one day for one user' %></span>
+      </div>
+    </fieldset>
+    <% error = @recreation.reservation_settings.errors.key?(:available_from) && @recreation.reservation_settings.errors[:available_from].count > 0 %>
+    <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+      <%= settings_form.label :available_from, :class => 'control-label' %>
+      <div class='controls'>
+        <%= settings_form.time_field :available_from, :class => 'form-control input-xlarge input-with-feedback' %>
+        <span class='help-inline'><%= error ? settings_form.error_message_on(:available_from) : 'Recreation available from time in format HH:MM' %></span>
+      </div>
+    </fieldset>
+    <% error = @recreation.reservation_settings.errors.key?(:available_to) && @recreation.reservation_settings.errors[:available_to].count > 0 %>
+    <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+      <%= settings_form.label :available_to, :class => 'control-label' %>
+      <div class='controls'>
+        <%= settings_form.time_field :available_to, :class => 'form-control input-xlarge input-with-feedback' %>
+        <span class='help-inline'><%= error ? settings_form.error_message_on(:available_to) : 'Recreation available to time in format HH:MM' %></span>
+      </div>
+    </fieldset>
+    <fieldset class="control-group <%= error ? 'has-error' : ''%>'">
+      <%= settings_form.label :weekdays, :class => 'control-label' %>
+      <div class='controls'>
+        <% [ :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday ].each do |day| %>
+          <label class="checkbox-inline"><input type="checkbox" name="recreation[reservation_settings_attributes][weekdays][]" value="<%= day %>" <%= 'checked' if @recreation.reservation_settings.weekdays.include? day %> /><%= day.to_s.capitalize %></label>
+        <% end %>
+      </div>
+    </fieldset>
+  <% end %>
+  <% if @type == 'slot_based_reservation_settings' %>
+    <% error = @recreation.reservation_settings.errors.key?(:max_guests) && @recreation.reservation_settings.errors[:max_guests].count > 0 %>
+    <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+      <%= settings_form.label :max_guests, :class => 'control-label' %>
+      <div class='controls'>
+        <%= settings_form.number_field :max_guests, :class => 'form-control input-xlarge input-with-feedback' %>
+        <span class='help-inline'><%= error ? settings_form.error_message_on(:max_guests) : 'Max number of guests for one event' %></span>
+      </div>
+    </fieldset>
+    <fieldset class="control-group <%= error ? 'has-error' : ''%>'">
+      <%= settings_form.label :weekdays, :class => 'control-label' %>
+      <div class='controls'>
+        <% [ :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday ].each do |day| %>
+          <div>
+            <label><%= day.to_s.capitalize %>: <input type="time" name="recreation[reservation_settings_attributes][<%= day.to_s %>][]" value="<%= @recreation.reservation_settings.send(day) %>" /></label>
+          </div>
+        <% end %>
+      </div>
+    </fieldset>
+  <% end %>
 <% end %>
 
 <div class="form-actions">
