@@ -1,8 +1,10 @@
 $green-color: #5cb85c;
 $red-color: #d9534f;
 $gray-color: gray;
+$blue-color: #5bc0de;
 
 $navbar-height: 100px;
+$footer-height: 60px;
 
 .editableform-loading, .editable-clear-x {
   background: none;
@@ -61,6 +63,12 @@ $navbar-height: 100px;
         text-overflow: ellipsis;
         overflow: hidden;
       }
+
+      @media (max-width: 650px) {
+        span {
+          display: none;
+        }
+      }
     }
 
     li > a {
@@ -94,7 +102,7 @@ div[data-control="main"] {
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
   z-index: 2;
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: $footer-height;
   background-color: white;
 }
 
@@ -105,14 +113,91 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40px;
+  height: $footer-height;
+}
+
+div[data-control="current-date"] {
+  position: fixed;
+  top: $navbar-height - 9px;
+  left: 50%;
+  z-index: 1100;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 5px;
+  color: #777;
+  background-color: #f8f8f8;
+  -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
+  border-color: #e7e7e7;
+  border-width: 0 1px 1px;
+  border-radius: 0 0 10px 10px;
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  -moz-animation: hiding 2s linear 5s forwards;
+  /* Firefox */
+  -webkit-animation: hiding 2s linear 5s forwards;
+  /* Safari and Chrome */
+  -o-animation: hiding 1s linear 5s forwards;
+  /* Opera */
+  animation: hiding 1s linear 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  @keyframes hiding {
+    to {
+      top: 60px;
+      z-index: 0;
+    }
+  }
+  @-webkit-keyframes hiding {
+    to {
+      top: 60px;
+      z-index: 0;
+    }
+  }
 }
 
 .reservations-container {
+  position: relative;
+  z-index: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   grid-gap: 30px;
   margin: 0 15px;
+}
+
+.next-prev {
+  position: fixed;
+  bottom: 0;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top: $navbar-height;
+  font-size: 36px;
+  z-index: 1;
+  color: #777;
+  opacity: 0;
+  transition: opacity ease 0.5s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .glyphicon {
+    top: 50%;
+    transform: rotate(90deg);
+  }
+
+  &.prev {
+    left: 0
+  }
+
+  &.next {
+    right: 0;
+    text-align: right;
+  }
+
 }
 
 [data-control="anchor-target"] {
@@ -139,12 +224,22 @@ footer {
   }
 }
 
-
-
 span[data-control="display-name"] {
   font-size: 14px;
   margin-left: 10px;
-  margin-right: 10px;
+  z-index: 1;
+}
+
+span.badge {
+  font-size: 14px;
+  font-weight: lighter;
+  margin-left: -.25em;
+  float: none !important;
+  -webkit-border-radius: 0 .25em .25em 0;
+  -moz-border-radius: 0 .25em .25em 0;
+  border-radius: 0 .25em .25em 0;
+  min-width: auto;
+  padding: .2em .6em .3em;
 }
 
 [data-control="reserve-action-menu"] .btn-link {
@@ -171,22 +266,43 @@ span[data-control="display-name"] {
 [data-control="reserve-action"] {
 
   display: flex;
+  min-height: 42px;
+
+  &:hover:not(.disabled) {
+    background-color: inherit !important;
+    -webkit-box-shadow: inset 0 0 10px 0 $green-color;
+    -moz-box-shadow: inset 0 0 10px 0 $green-color;
+    box-shadow: inset 0 0 10px 0 $green-color;
+  }
 
   span[data-control="display-name"] {
     overflow-x: hidden;
     text-overflow: ellipsis;
   }
 
+  span:last-of-type {
+    margin-right: 10px;
+  }
+
   [data-control*="reserve-action-icon"] {
     color: $green-color;
     margin-left: auto;
     font-size: 18px;
+    text-decoration: none;
 
-    &[data-control*="reserve-action-icon-menu"] {
+    &[data-control="reserve-action-icon-menu"] {
       color: $gray-color;
     }
 
-    &[data-control*="reserve-action-icon-cancel"] {
+    &[data-control="reserve-action-icon-add-me"] {
+      color: $blue-color;
+    }
+
+    &[data-control="reserve-action-icon-remove-me"] {
+      color: $red-color;
+    }
+
+    &[data-control="reserve-action-icon-cancel"] {
       color: $red-color;
     }
   }
@@ -213,6 +329,13 @@ span[data-control="display-name"] {
 .popover-content .form-control {
   width: auto;
 }
+
+.list-participants-inner {
+  padding-left: 15px;
+  text-align: left;
+  list-style-type: disc;
+}
+
 
 .form-group-sm i.form-control-feedback {
   line-height: 30px;

@@ -129,4 +129,26 @@ $(document).ready(function () {
     }
   });
 
+  $('[data-control="list-participants"]').tooltip({
+    title: function () {
+      var list = "";
+      $.each(JSON.parse($(this).attr('data-participants')) || [], function(name, value) {
+        if (value) {
+          list += "<li>{0}</li>".format(value);
+        }
+      });
+      return list !== "" && $('#list-participants-template').html().format(list);
+    }
+  }).on('click', function (event) {
+    return false;
+  });
+
+  $('div[data-control="main"]').hammer().bind("swiperight", function() {
+    var url = $('div[data-control="prev"] a').attr('href');
+    location.assign(location.pathname + url);
+  });
+  $('div[data-control="main"]').hammer().bind("swipeleft", function() {
+    var url = $('div[data-control="next"] a').attr('href');
+    location.assign(location.pathname + url);
+  });
 });

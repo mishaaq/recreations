@@ -11,8 +11,8 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg?v=Km2L0m6RLr" color="#5bbad5">
     <link rel="shortcut icon" href="/favicon.ico?v=Km2L0m6RLr">
     <meta name="theme-color" content="#ffffff">
-    <%= javascript_include_tag 'jquery', 'bootstrap.min', 'jquery-ujs', 'bootstrap-editable.min', 'application' %>
-    <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'bootstrap-editable.min', 'application' %>
+    <%= javascript_include_tag 'jquery.min', 'bootstrap.min', 'jquery-ujs', 'bootstrap-editable.min', 'hammer.min', 'jquery.hammer', 'application' %>
+    <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'bootstrap-editable.min', 'flaticon', 'application' %>
     <script type="application/javascript">
       var CSRF = "<%= session[:csrf] %>";
     </script>
@@ -25,7 +25,13 @@
     </div>
 
     <div data-control="main" class='main'>
+      <div data-control="prev" class="next-prev prev">
+        <a href="?date=<%= @date.advance({:days => -1}).strftime("%Y-%m-%d") %>"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
+      </div>
       <%= yield %>
+      <div data-control="next" class="next-prev next">
+        <a href="?date=<%= @date.advance({:days => 1}).strftime("%Y-%m-%d") %>"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span></a>
+      </div>
     </div>
 
     <div class="hide">
@@ -33,7 +39,7 @@
     </div>
     <footer>
       <div data-control="footer" class='footer-wrapper container-fluid'>
-        <p class='pull-left'>Copyright &copy; 2017 Michał Żarłok</p>
+        <p class='pull-left'>Copyright &copy; 2017-2018 Michał Żarłok<br>Icons of recreations made by Freepik from www.flaticon.com</p>
       </div>
     </footer>
   </body>
