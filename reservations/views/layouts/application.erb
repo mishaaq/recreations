@@ -15,6 +15,8 @@
     <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'bootstrap-editable.min', 'flaticon', 'application' %>
     <script type="application/javascript">
       var CSRF = "<%= session[:csrf] %>";
+      var prevUrl = "?date=<%= @date.advance({:days => -1}).strftime("%Y-%m-%d") %>";
+      var nextUrl = "?date=<%= @date.advance({:days => 1}).strftime("%Y-%m-%d") %>";
     </script>
   </head>
   <body>
@@ -25,13 +27,17 @@
     </div>
 
     <div data-control="main" class='main'>
-      <div data-control="prev" class="next-prev prev">
-        <a href="?date=<%= @date.advance({:days => -1}).strftime("%Y-%m-%d") %>"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
-      </div>
+      <% unless request.mobile_browser? %>
+        <div data-control="prev" class="next-prev prev">
+          <a href="?date=<%= @date.advance({:days => -1}).strftime("%Y-%m-%d") %>"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
+        </div>
+      <% end %>
       <%= yield %>
+      <% unless request.mobile_browser? %>
       <div data-control="next" class="next-prev next">
         <a href="?date=<%= @date.advance({:days => 1}).strftime("%Y-%m-%d") %>"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span></a>
       </div>
+      <% end %>
     </div>
 
     <div class="hide">

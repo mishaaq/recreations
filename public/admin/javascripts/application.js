@@ -92,7 +92,7 @@ $(document).ready(function () {
         var checkbox, willBeChecked;
         ev.stopPropagation();
 
-        if (ev.currentTarget.tagName == 'TR') { 
+        if (ev.currentTarget.tagName === 'TR') {
           checkbox = $(this).find('.list-selectable-checkbox');
           willBeChecked = !checkbox.prop('checked');
           checkbox.prop('checked', willBeChecked);

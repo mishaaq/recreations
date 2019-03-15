@@ -11,4 +11,11 @@ module ClassExtends
       DateTime.new(year, month, day, hour, min, seconds, offset)
     end
   end
+
+  require 'rack'
+  class Rack::Request
+    X_MOBILE_DEVICE = 'X_MOBILE_DEVICE'.freeze
+
+    def mobile_browser?; get_header(X_MOBILE_DEVICE) end
+  end
 end
