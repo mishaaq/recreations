@@ -5,21 +5,19 @@ Recreations::Reservations.controllers :reservations do
   layout 'application'
 
   before do # get user by cookie
-    @current_user = Auth.by_cookie(cookies.signed)
+    @current_user = Auth.by_token(cookies.signed)
   end
 
   before :index do # migrate user to cookie authentication
     unless @current_user.present?
-      @current_user = Auth.by_ip(request.ip)
-      @current_user.name = UUIDTools::UUID.random_create.to_s
-      unless @current_user.save
-        halt 500
-      end
+      @current_user = Auth.by_cookie(cookie.signed) || Auth.by_ip(request.ip)
+      cookie.permanent.signed['login'] = @current_user.name
+      redirect Recreations::Base.url_for(:user, :token)
     end
   end
 
   after do
-    cookie.permanent.signed['login'] = @current_user.name if @current_user.present?
+    cookie.permanent.signed['token'] = @current_user.auth_token unless @current_user.auth_token.blank?
   end
   
   get :index, :map => '/' do

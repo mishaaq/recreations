@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-  <meta name=viewport content='width=device-width,initial-scale=1' />
-  <title>Recreations 2.0</title>
-  <%= stylesheet_link_tag 'bootstrap' %>
-</head>
-<body>
-  <%= yield %>
-</body>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name=viewport content='width=device-width,initial-scale=1' />
+    <title>Reservations 2.0</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=Km2L0m6RLr">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=Km2L0m6RLr">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=Km2L0m6RLr">
+    <link rel="manifest" href="/manifest.json?v=Km2L0m6RLr">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=Km2L0m6RLr" color="#5bbad5">
+    <link rel="shortcut icon" href="/favicon.ico?v=Km2L0m6RLr">
+    <meta name="theme-color" content="#ffffff">
+    <%= javascript_include_tag 'jquery.min', 'bootstrap.min', 'jquery-ujs', 'application.js' %>
+    <%= stylesheet_link_tag 'bootstrap.min', 'bootstrap-theme.min', 'application.css' %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

@@ -58,4 +58,13 @@ Padrino.after_load do
   DataMapper.finalize
 end
 
+begin
+  require 'pry'
+  require 'pry-coolline'
+  $VERBOSE = nil
+  IRB = Pry
+  $VERBOSE = false
+rescue LoadError
+end
+
 Padrino.load!

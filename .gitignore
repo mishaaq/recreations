@@ -5,6 +5,7 @@ vendor/gems/*
 !vendor/gems/cache/
 .sass-cache/*
 db/*.db
+config/config.yml
 .*.sw*
 bin/*
 Gemfile.lock

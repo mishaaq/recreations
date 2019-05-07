@@ -1,6 +1,6 @@
 <div class="reservations-container">
   <% for @recreation in @recreations %>
-    <div data-control="anchor-target" class="reservations-item" id="<%= @recreation.name.gsub(' ', '_') %>">
+    <div data-control="anchor-target" class="reservations-item" id="<%= permalink_for(@recreation.name) %>">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title"><%= @recreation.name %></h3>

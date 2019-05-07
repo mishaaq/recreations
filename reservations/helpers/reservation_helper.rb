@@ -67,6 +67,10 @@ module Recreations
       def reservation_anchor(reservation)
         "r#{reservation.recreation_id}-#{reservation.time.strftime('%H_%M')}"
       end
+
+      def permalink_for(str)
+        str.gsub(/[^\w\/]|[!\(\)\.]+/, ' ').strip.downcase.gsub(/\ +/, '-')
+      end
     end
 
     helpers ReservationHelper
