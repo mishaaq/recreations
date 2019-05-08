@@ -28,6 +28,7 @@ gem 'dm-serializer'
 gem 'dm-accepts_nested_attributes', :github => 'snusnu/dm-accepts_nested_attributes'
 gem 'icalendar'
 gem 'rufus-scheduler'
+gem 'rack-mobile-detect'
 
 # Test requirements
 gem 'mocha', :group => 'test', :require => false

@@ -45,7 +45,7 @@ $(document).ready(function () {
 
   detectPrivateMode(function (isPrivateMode) {
     if (isPrivateMode) {
-      $root.children().replaceWith("<html><p>Private mode not supported.</p></html>");
+      $root.children().replaceWith("<html><body><p>Private mode not supported.</p></body></html>");
     }
   });
 
@@ -144,11 +144,9 @@ $(document).ready(function () {
   });
 
   $('div[data-control="main"]').hammer().bind("swiperight", function() {
-    var url = $('div[data-control="prev"] a').attr('href');
-    location.assign(location.pathname + url);
+    location.assign(location.pathname + prevUrl);
   });
   $('div[data-control="main"]').hammer().bind("swipeleft", function() {
-    var url = $('div[data-control="next"] a').attr('href');
-    location.assign(location.pathname + url);
+    location.assign(location.pathname + nextUrl);
   });
 });

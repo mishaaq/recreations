@@ -1,5 +1,8 @@
+require 'rack/mobile-detect'
+
 module Recreations
   class Reservations < Padrino::Application
+    use Rack::MobileDetect
     register Padrino::Mailer
     register Padrino::Helpers
     register Padrino::Cookies
