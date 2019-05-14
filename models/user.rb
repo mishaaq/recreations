@@ -9,7 +9,7 @@ class User
   property :display_name, String, :required => true
   property :email, String
   property :spark_integration, Boolean
-  property :auth_token, String
+  property :auth_token, String, :default => ''
 
   has n, :reservations, :constraint => :destroy
   has n, :participations, :child_key => [ :user_id ], :constraint => :destroy
