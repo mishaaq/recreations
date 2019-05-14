@@ -9,7 +9,7 @@ class User
   property :display_name, String, :required => true
   property :email, String
   property :spark_integration, Boolean
-  property :auth_token, String, :unique => true
+  property :auth_token, String
 
   has n, :reservations, :constraint => :destroy
   has n, :participations, :child_key => [ :user_id ], :constraint => :destroy
@@ -19,7 +19,6 @@ class User
   validates_uniqueness_of :name
   validates_presence_of :display_name
   validates_format_of :email, :as => :email_address
-  validates_uniqueness_of :auth_token
 
   # moves all associations from other_user to self
   def merge(other_user)
