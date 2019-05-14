@@ -24,7 +24,7 @@ Recreations::Base.controllers :user do
 
   before :token do
     @current_user = Auth.by_cookie(cookie.signed)
-    return halt 301 unless @current_user
+    return halt 401 unless @current_user
   end
 
   ldap_config = HashWithIndifferentAccess.new(YAML.load_file(Padrino.root('config/config.yml'))['ldap'])
