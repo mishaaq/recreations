@@ -33,6 +33,20 @@
                   </div>
                 </div>
               </li>
+              <li class=list-menu-wrapper.list-menu-wrapper-disabled>
+                <%=link_to tag_icon('user-plus', pat(:merge_selected)), '#', :id => 'merge-selected', :class => 'list-menu-link list-menu-link-disabled' %>
+                <div class='list-menu-popover-merge-selected popover right'>
+                  <div class=arrow></div>
+                  <h3 class=popover-title><%= pat(:merge_selected_title) %></h3>
+                  <div class=popover-content>
+                    <% form_tag url(:users, :merge_many), :method => :post do %>
+                      <%=hidden_field_tag :user_ids, :'data-merge-many-ids' => true %>
+                      <%=submit_tag pat(:merge), :class =>'list-menu-popover-merge-selected-btn btn btn-danger btn-small' %>
+                      <div class='btn btn-default btn-small cancel'><%= pat(:cancel) %></div>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </th>
@@ -59,6 +73,7 @@
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:users, :edit, :id => user.id), :rel => :tooltip, :title => "#{pat(:edit)} user", :class => 'list-row-action-wrapper-link' %>
+               <%= link_to tag_icon(:'arrow-circle-right'), :href => url(:reservations, :index, :filter_date => "", :filter_user => user.id), :rel => :tooltip, :title => "Reservations", :class => 'list-row-action-wrapper-link' %>
                <%= link_to tag_icon('trash-o'), :rel => :tooltip, :title => "#{pat(:delete)} user", :class => 'list-row-action-delete-one list-row-action-wrapper-link' %>
                <div class="popover list-row-action-popover-delete-one left">
                  <div class=arrow> </div>
