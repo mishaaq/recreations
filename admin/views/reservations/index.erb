@@ -3,9 +3,11 @@
   <li> <%= link_to tag_icon(:plus, pat(:new)), url(:reservations, :new) %></li>
 </ul>
 <div class=tabs-content>
+  <span>Count: <%= @reservations.length %></span>
   <script>
     var filter = {
-      date: '<%= @filter[:date] %>'
+      date: '<%= @filter[:date] %>',
+      user: '<%= @filter[:user] %>'
     }
   </script>
   <table id=list class="table table-striped table-hover table-condensed">
@@ -42,7 +44,7 @@
           </div>
         </th>
         <th class=header> <%= mat(:reservation, :time) %><a tabindex="0" role="button" data-toggle="popover" data-trigger="click" data-placement="bottom" data-html="true" data-control="date-filter" class="glyphicon glyphicon-filter pull-right" aria-hidden="true"></a></th>
-        <th class=header> <%= mat(:reservation, :user_id) %></th>
+        <th class=header> <%= mat(:reservation, :user_id) %><a tabindex="0" role="button" data-toggle="popover" data-trigger="click" data-placement="bottom" data-html="true" data-control="user-filter" class="glyphicon glyphicon-filter pull-right" aria-hidden="true"></a></th>
         <th class=header> <%= mat(:reservation, :recreation_id) %></th>
         <th class="header list-row-action-header"></th>
       </tr>

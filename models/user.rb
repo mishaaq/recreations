@@ -24,6 +24,9 @@ class User
   # moves all associations from other_user to self
   def merge(other_user)
     return unless other_user.instance_of? User
+    return if !auth_token.empty? and other_user.auth_token.empty? and auth_token != other_user.auth_token
+
+    attribute_set('auth_token', auth_token || other_user.auth_token)
 
     reservations_to_move = other_user.reservations
     reservations_to_move.update({:user_id => id})

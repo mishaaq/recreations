@@ -5,6 +5,9 @@ html, body {
 body {
   font-size: 13px;
 }
+i.fa {
+  display: inline-block;
+}
 .main {
   min-height: 100%;
   height: auto !important;
@@ -290,13 +293,15 @@ footer p {
   background-image: inherit;
   cursor: default !important;
 }
-.list-menu-popover-delete-selected {
+.list-menu-popover-delete-selected,
+.list-menu-popover-merge-selected {
   left: 160px;
   top: 37px;
   width: 250px;
   text-align: center;
 }
-.list-menu-popover-delete-selected-btn {
+.list-menu-popover-delete-selected-btn,
+.list-menu-popover-merge-selected-btn {
   margin-right: 10px;
 }
 /* ---- End Application::List::ActionsOnList ---- */

@@ -1,8 +1,15 @@
 Recreations::Admin.controllers :users do
-  get :index do
+
+  get :index, :provides => [:html, :json] do
     @title = "Users"
     @users = User.all
-    render 'users/index'
+
+    case content_type
+    when :json then
+      @users.to_json
+    else
+      render 'users/index'
+    end
   end
 
   get :new do
@@ -54,6 +61,21 @@ Recreations::Admin.controllers :users do
     end
   end
 
+  post :merge_many do
+    @title = "Users"
+    unless params[:user_ids]
+      flash[:error] = pat(:destroy_many_error, :model => 'user')
+      redirect(url(:users, :index))
+    end
+    ids = params[:user_ids].split(',').map(&:strip)
+    users = User.all(:id => ids)
+
+    if users.reduce(&:merge)
+      flash[:success] = pat(:merge_many_success, :model => 'Users', :ids => "#{ids.join(', ')}")
+    end
+    redirect url(:users, :index)
+  end
+
   delete :destroy, :with => :id do
     @title = "Users"
     user = User.get(params[:id])
@@ -80,7 +102,6 @@ Recreations::Admin.controllers :users do
     users = User.all(:id => ids)
     
     if users.destroy
-    
       flash[:success] = pat(:destroy_many_success, :model => 'Users', :ids => "#{ids.join(', ')}")
     end
     redirect url(:users, :index)
