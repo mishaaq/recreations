@@ -70,7 +70,13 @@ Recreations::Admin.controllers :users do
     ids = params[:user_ids].split(',').map(&:strip)
     users = User.all(:id => ids)
 
-    if users.reduce(&:merge)
+    result = users.reduce do |user, duplicate|
+      user.merge(duplicate)
+      duplicate.destroy
+      raise "error" unless user.save
+      user
+    end
+    if result
       flash[:success] = pat(:merge_many_success, :model => 'Users', :ids => "#{ids.join(', ')}")
     end
     redirect url(:users, :index)
