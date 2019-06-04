@@ -40,6 +40,7 @@ Recreations::Base.controllers :user do
       flash.error = "Username or password blank"
       redirect url_for(:user, :token)
     end
+    @params[:username].downcase!
 
     ldap.authenticate(@params['username'] + ldap_config[:domain], @params['password'])
     begin
