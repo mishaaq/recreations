@@ -24,7 +24,7 @@ Recreations::Base.controllers :user do
 
   before :token do
     @current_user = Auth.by_cookie(cookie.signed)
-    return halt 404 unless @current_user
+    return halt 401 unless @current_user
   end
 
   ldap_config = HashWithIndifferentAccess.new(YAML.load_file(Padrino.root('config/config.yml'))['ldap'])
@@ -40,6 +40,7 @@ Recreations::Base.controllers :user do
       flash.error = "Username or password blank"
       redirect url_for(:user, :token)
     end
+    @params[:username].downcase!
 
     ldap.authenticate(@params['username'] + ldap_config[:domain], @params['password'])
     begin
