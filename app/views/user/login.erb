@@ -1,0 +1,29 @@
+<div id="login-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="display: inline-block;">Login</h4>
+        <a style="float: right;line-height: 1;" tabindex="0" class="btn btn-sm btn-info" role="button" data-toggle="popover" data-trigger="focus"
+           title="Password policy" data-placement="bottom" data-content="Your PegaID and/or password are not stored anywhere, but used only for verification and authentication token generation.">
+          <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="modal-body">
+        <% if flash.error %><div class="alert alert-danger" role="alert"><%= flash.error %></div><% end %>
+        <p>Please provide your credentials to generate authorization token:</p>
+        <% form_for :user, url(:user, :token, :id => @current_user.id), :id => 'login_form' do |f| %>
+          <div class="form-group input-group">
+            <input placeholder="Username" class="form-control" type="text" name="username" />
+            <span class="input-group-addon" id="basic-addon2"><%= @domain %></span>
+          </div>
+          <div class="form-group">
+            <input placeholder="Password" class="form-control" type="password" name="password" />
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </div>
+  </div>
+</div>

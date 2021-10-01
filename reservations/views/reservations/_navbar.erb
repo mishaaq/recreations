@@ -33,7 +33,7 @@
     <ul class="nav navbar-nav navbar-links">
       <% @recreations.each do |recreation| %>
           <li class="navbar-module">
-            <a href="<%= url_for "##{recreation.name.gsub(' ', '_')}" %>"><i class="flaticon-<%= recreation.name.gsub(' ', '_') %>"></i><span><%= recreation.name %></span></a>
+            <a href="<%= url_for "##{permalink_for(recreation.name)}" %>"><i class="flaticon-<%= recreation.name.gsub(' ', '_') %>"></i><span><%= recreation.name %></span></a>
           </li>
       <% end %>
     </ul>

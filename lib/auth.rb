@@ -1,10 +1,14 @@
+require 'active_support/hash_with_indifferent_access'
 
 class Auth
 
   @resolv = Resolv.new
+  @digestor = Digest::SHA1.new
+  @variables = HashWithIndifferentAccess.new(YAML.load_file(Padrino.root('config/config.yml'))['variables'])
 
   class << self
 
+    # DEPRECATED
     def by_ip(ip)
       current_user = User.first_or_new({:name => ip})
       unless current_user.saved?
@@ -21,10 +25,18 @@ class Auth
       current_user
     end
 
+    # DEPRECATED
     def by_cookie(cookie)
       User.first({:name => cookie['login']})
     end
 
+    def by_token(cookie)
+      cookie['token'] && User.first({:auth_token => cookie['token']})
+    end
+
+    def generate_token(input)
+      @digestor.hexdigest(@variables[:token_salt] + input)
+    end
   end
 
 end

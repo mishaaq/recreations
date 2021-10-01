@@ -26,19 +26,52 @@ $(document).ready(function () {
   });
 
   $('[data-control="date-filter"]').popover({
-    title: 'Show from',
+    title: 'Show at',
     content: function () {
       var filterDate = filter['date'];
       return $("#date-filter-datepicker-template").html().format(filterDate);
     }
   }).on('shown.bs.popover', function (event) {
     var datepicker = $(this).next('.popover').find('[data-control="date-filter-datepicker"]');
-    datepicker.datepicker().on('changeDate', function() {
+    datepicker.datepicker({clearBtn: true}).on('changeDate', function(event) {
       var searchParams = new URLSearchParams(location.search);
       searchParams.set("filter_date", datepicker.datepicker('getFormattedDate'));
       location.search = searchParams.toString();
+    }).on('clearDate', function() {
+      var searchParams = new URLSearchParams(location.search);
+      searchParams.set("filter_date", "");
+      location.search = searchParams.toString();
     });
   });
+
+  $.get('users.json', function (data) {
+    var users = data;
+    $('[data-control="user-filter"]').popover({
+      title: 'Show for',
+      content: function () {
+        var filterUser = filter['user'];
+        return $("#user-filter-typeahead-template").html().format(filterUser);
+      }
+    }).on('shown.bs.popover', function (event) {
+      var typeahead = $(this).next('.popover').find('[data-control="user-filter-typeahead"]');
+      typeahead.typeahead({
+        source: users,
+        autoSelect: true,
+        displayText: function(item) {
+          return "{0} ({1})".format(item.name, item.display_name);
+        },
+        afterSelect: function(item) {
+          var searchParams = new URLSearchParams(location.search);
+          if (item) {
+            searchParams.set("filter_user", item.id);
+          } else {
+            searchParams.delete("filter_user");
+          }
+          location.search = searchParams.toString();
+        }
+      });
+    });
+  }, 'json');
 });
 
 !function($) {
@@ -59,6 +92,7 @@ $(document).ready(function () {
     function generalToggle() {
       var checked = listCheckboxes.filter(':checked').length;
       toggleAction('#delete-selected', checked === 0);
+      toggleAction('#merge-selected', checked < 2);
       toggleAction('#deselect-all', checked === 0);
       toggleAction('#select-all', checked === listCheckboxesLength);
     }
@@ -142,6 +176,28 @@ $(document).ready(function () {
 
         $(this).siblings('.list-menu-popover-delete-selected').find(':hidden[data-delete-many-ids=true]').
           val(listCheckboxes.filter(':checked').map(function() { return $(this).val(); }).toArray().join(','));
+      });
+      // Delete selected
+      $('#merge-selected').on('click', function(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if ($(this).is('.list-menu-link-disabled')) return;
+
+        // Open the popup to confirm deletion
+        $(this).parent().addClass('active').parent('.dropdown').addClass('open');
+        $(this).addClass('active')
+          .siblings('.list-menu-popover-merge-selected').first().show()
+          .find('.cancel').on('click', function() {
+
+          // Hide the popover on cancel
+          $(this).parents('.list-menu-popover-merge-selected').hide()
+            .siblings('#merge-selected').removeClass('active').parent().removeClass('active');
+          // and close the dropdown
+          $(this).parents('.dropdown').removeClass('open');
+        });
+
+        $(this).siblings('.list-menu-popover-merge-selected').find(':hidden[data-merge-many-ids=true]').
+        val(listCheckboxes.filter(':checked').map(function() { return $(this).val(); }).toArray().join(','));
       });
 
       // Catch checkboxes check/uncheck and enable/disable the delete selected functionality

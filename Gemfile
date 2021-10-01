@@ -9,6 +9,8 @@ gem 'thin'
 # Project requirements
 gem 'rake'
 gem 'thor', '=0.19.4'
+gem 'pry'
+gem 'pry-coolline'
 
 # Component requirements
 gem 'activesupport', '>= 3.1'
@@ -29,6 +31,7 @@ gem 'dm-accepts_nested_attributes', :github => 'snusnu/dm-accepts_nested_attribu
 gem 'icalendar'
 gem 'rufus-scheduler'
 gem 'rack-mobile-detect'
+gem 'net-ldap'
 
 # Test requirements
 gem 'mocha', :group => 'test', :require => false

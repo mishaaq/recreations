@@ -2,6 +2,7 @@ require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/date_time/conversions'
 require 'active_support/core_ext/time/zones'
+require 'active_support/hash_with_indifferent_access'
 
 module Recreations
   class Base < Padrino::Application
