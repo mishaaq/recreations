@@ -11,7 +11,7 @@ class Reservation
   belongs_to :recreation
 
   has n, :participations, :child_key => [ :reservation_id ], :constraint => :destroy
-  has n, :participants, User, :through => :participations, :via => :user
+  has n, :participants, "User", :through => :participations, :via => :user
 
   validates_presence_of :time
   validates_presence_of :user_id

@@ -44,7 +44,15 @@
       </div>
     </fieldset>
 <% end %>
-
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :active, :class => 'control-label' %>
+  <div class='checkbox'>
+    <label>
+      <%= f.check_box :active, :class => 'input-xlarge' %>
+      Active?
+    </label>
+  </div>
+</fieldset>
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-primary' %>
   &nbsp;

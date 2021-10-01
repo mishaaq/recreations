@@ -24,7 +24,7 @@ Recreations::Reservations.controllers :reservations do
     @date = params[:date].present? ? Time.strptime(params[:date], "%Y-%m-%d") : Time.now
 
     @reservations = {}
-    @recreations = Recreation.all
+    @recreations = Recreation.all_active
     @recreations.each do |recreation|
       @reservations[recreation.name] = []
       current_reservations = Reservation.at(@date, {:recreation => recreation, :order => [:time.asc]})
