@@ -6,6 +6,6 @@ class Participation
   property :user_id, Integer
   property :reservation_id, Integer
 
-  belongs_to :user, User, :key => true
+  belongs_to :user, "User", :key => true
   belongs_to :reservation, Reservation, :key => true
 end
